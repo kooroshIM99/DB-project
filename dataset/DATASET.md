@@ -7,6 +7,9 @@
 - فایل خام: `dataset/arxiv_project_sample_50k.jsonl`
 - فایل پاک‌شده: `dataset/arxiv_project_sample_50k_cleaned.jsonl`
 - مستند دیتاست: `dataset/DATASET.md`
+- کد ساخت دیتاست پاک‌شده: `scripts/clean_dataset.py`
+- اعتبارسنج مستقل دیتاست: `scripts/validate_cleaned_dataset.py`
+- تست‌های پاک‌سازی: `tests/test_clean_dataset.py`
 
 | ویژگی | فایل خام | فایل پاک‌شده |
 |---|---:|---:|
@@ -167,6 +170,29 @@ cmp-lg/9410003
 
 ## بازتولید دیتاست
 
-در نسخهٔ ساده‌شدهٔ پروژه، فقط فایل خام، فایل پاک‌شده و این مستند نگه داشته شده‌اند. کد پاک‌سازی و گزارش ماشین‌خوان برای خلوت‌ماندن مخزن حذف شده‌اند، اما نتیجهٔ اعتبارسنجی و آمار واقعی در همین سند ثبت شده است.
+دستورات باید از ریشهٔ پروژه اجرا شوند. گزارش ماشین‌خوان در مخزن نگه‌داری نمی‌شود، اما اسکریپت پاک‌سازی هنگام بازتولید همچنان می‌تواند آن را در مسیر موقت بسازد:
+
+```bash
+conda run --no-capture-output -n ai_agent \
+  python scripts/clean_dataset.py \
+  --input dataset/arxiv_project_sample_50k.jsonl \
+  --output dataset/arxiv_project_sample_50k_cleaned.jsonl \
+  --report /tmp/arxiv_project_sample_50k_cleaning-report.json
+```
+
+اجرای تست‌های واحد:
+
+```bash
+conda run --no-capture-output -n ai_agent \
+  python -m unittest discover -s tests -v
+```
+
+اعتبارسنجی کامل خروجی:
+
+```bash
+conda run --no-capture-output -n ai_agent \
+  python scripts/validate_cleaned_dataset.py \
+  dataset/arxiv_project_sample_50k_cleaned.jsonl
+```
 
 هر اجرای آینده باید هش فایل ورودی را با مقدار ثبت‌شده در این سند مقایسه کند. تغییر هش ورودی به معنی تغییر منبع داده است و آمار این سند باید دوباره تولید شود.
