@@ -1,0 +1,52 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "_meta": {
+      "description": "Baseline mapping for cleaned arXiv metadata with only standard field types and analyzers.",
+      "dataset": "dataset/arxiv_project_sample_50k_cleaned.jsonl",
+      "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+      "stage": "3",
+      "index": "arxiv_papers_baseline"
+    },
+    "properties": {
+      "paper_id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "abstract": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "title_abstract": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "authors": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "categories": {
+        "type": "keyword"
+      },
+      "primary_category": {
+        "type": "keyword"
+      },
+      "year": {
+        "type": "integer"
+      },
+      "update_date": {
+        "type": "date",
+        "format": "yyyy-MM-dd"
+      }
+    }
+  }
+}

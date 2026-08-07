@@ -62,13 +62,13 @@
 
 ## ⁧مرحله ⁦2:⁩ انتخاب تکنولوژی و طراحی محیط اجرا⁩
 
-⁧وضعیت: نیمه‌کامل؛ محیط محلی راه‌اندازی شده، اما توجیه انتخاب ⁦Elasticsearch⁩ در مقایسه با حداقل یک فناوری دیگر هنوز تکمیل نشده است.⁩
+⁧وضعیت: انجام شده.⁩
 
 ⁧در صورت پروژه، ⁦Elasticsearch⁩ و ⁦OpenSearch⁩ به‌عنوان گزینه‌های مناسب برای داده متنی پیشنهاد شده‌اند. انتخاب این پروژه ⁦Elasticsearch⁩ است.⁩
 
 ⁧دلیل انتخاب ⁦Elasticsearch:⁩⁩
 
-- ⁧⁦TODO:⁩ توجیه انتخاب ⁦Elasticsearch⁩ در مقایسه با حداقل یک گزینه دیگر، در گزارش نهایی تکمیل شود.⁩
+- ⁧توجیه کوتاه انتخاب ⁦Elasticsearch⁩ در ⁦`README.md`⁩ ثبت شده است.⁩
 
 ⁧گزینه مقایسه‌ای مناسب:⁩
 
@@ -76,14 +76,14 @@
 
 ⁧مقایسه کوتاه:⁩
 
-- ⁧⁦TODO:⁩ مقایسهٔ دقیق با ⁦PostgreSQL Full-Text Search⁩ یا گزینهٔ دیگر در گزارش نهایی نوشته شود.⁩
+- ⁧گزینهٔ مقایسه‌ای اصلی ⁦PostgreSQL Full-Text Search⁩ است؛ خلاصهٔ مقایسه در ⁦`README.md`⁩ آمده است.⁩
 
 ⁧خروجی مورد انتظار این مرحله:⁩
 
 - ⁧فایل ⁦`docker-compose.yml`⁩ ساخته شد.⁩
 - ⁧نسخه ⁦Elasticsearch 9.4.4⁩ ثبت شد.⁩
 - ⁧منابع ⁦container⁩ شامل ⁦2GB memory⁩، ⁦2 CPU⁩، ⁦1GB heap⁩ و ⁦volume⁩ پایدار ثبت شد.⁩
-- ⁧توضیح انتخاب تکنولوژی فعلاً ⁦TODO⁩ است.⁩
+- ⁧توضیح انتخاب تکنولوژی در همین مرحله ثبت شد.⁩
 - ⁧⁦endpoint⁩ محلی ⁦`http://127.0.0.1:9200`⁩ برای مراحل بعد آماده شد.⁩
 
 ⁧معیار اتمام:⁩
@@ -95,7 +95,7 @@
 
 ## ⁧مرحله ⁦3:⁩ طراحی ⁦index⁩ و ⁦mapping⁩ اولیه⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده.⁩
 
 ⁧در این مرحله باید مشخص شود هر فیلد دیتاست پاک‌شده با چه نوعی در ⁦Elasticsearch⁩ ذخیره شود.⁩
 
@@ -118,6 +118,18 @@
 
 ⁧تنظیمات ثابت ⁦index⁩ خط مبنا در محیط محلی فعلی: ⁦`number_of_shards: 1`⁩ و ⁦`number_of_replicas: 0`⁩. چون محیط فعلی طبق ⁦`elasticsearch/README.md`⁩ تک‌نودی است، آزمایش واقعی ⁦replica⁩ در این محیط معتبر نیست؛ بررسی ⁦replica⁩ فقط با کلاستر چندنودی جدا قابل دفاع است.⁩
 
+⁧نقشهٔ اجرای کامل مرحله ⁦3:⁩⁩
+
+1. ⁧ساخت پوشه‌های لازم برای تنظیمات ⁦Elasticsearch⁩: ⁦`elasticsearch/mappings/`⁩ و در صورت نیاز ⁦`elasticsearch/settings/`⁩.⁩
+2. ⁧نوشتن ⁦mapping⁩ خط مبنا در ⁦`elasticsearch/mappings/arxiv_papers_baseline.json`⁩ با ⁦`dynamic: "strict"`⁩ تا هیچ فیلد خارج از قرارداد دیتاست به‌صورت مبهم وارد ⁦index⁩ نشود.⁩
+3. ⁧ثبت تنظیمات ثابت ⁦baseline index⁩ داخل همان فایل یا فایل تنظیمات همراه: ⁦`number_of_shards: 1`⁩ و ⁦`number_of_replicas: 0`⁩. در ⁦baseline⁩ هیچ ⁦ngram⁩، ⁦edge_ngram⁩، ⁦multi-field⁩ بهینه‌سازی‌شده یا ⁦analyzer⁩ اختصاصی تعریف نمی‌شود.⁩
+4. ⁧استفاده از ⁦standard analyzer⁩ برای فیلدهای متنی ⁦`title`⁩، ⁦`abstract`⁩، ⁦`title_abstract`⁩ و ⁦`authors`⁩. فیلدهای ⁦`categories`⁩ و ⁦`primary_category`⁩ از نوع ⁦`keyword`⁩، فیلد ⁦`year`⁩ از نوع ⁦`integer`⁩ و فیلد ⁦`update_date`⁩ از نوع ⁦`date`⁩ با ⁦format⁩ دقیق ⁦`yyyy-MM-dd`⁩ هستند.⁩
+5. ⁧نوشتن اسکریپت ساخت ⁦index⁩، مثلاً ⁦`scripts/create_index.py`⁩، با ورودی‌های ⁦`--index`⁩، ⁦`--mapping`⁩ و گزینهٔ صریح ⁦`--recreate`⁩. حذف ⁦index⁩ موجود فقط وقتی مجاز است که ⁦`--recreate`⁩ داده شود؛ اجرای پیش‌فرض نباید داده یا ⁦index⁩ موجود را حذف کند.⁩
+6. ⁧اسکریپت بعد از ساخت ⁦index⁩ باید تنظیمات و ⁦mapping⁩ برگشتی از ⁦Elasticsearch⁩ را بخواند و بررسی کند که نام ⁦index⁩، تعداد ⁦shard/replica⁩، ⁦dynamic strict⁩ و نوع همهٔ ⁦9⁩ فیلد با فایل ⁦mapping⁩ برابر است.⁩
+7. ⁧نوشتن تست‌های مرحله ⁦3⁩، مثلاً ⁦`tests/test_mapping.py`⁩، برای اعتبارسنجی ⁦JSON⁩ بودن فایل ⁦mapping⁩، وجود هر ⁦9⁩ فیلد، نبودن فیلد اضافه، نبود ⁦ngram/multi-field⁩ در ⁦baseline⁩، و درست‌بودن ⁦shard/replica⁩.⁩
+8. ⁧ثبت دستور بازتولید مرحله ⁦3⁩ در مستندات، شامل دستور ساخت ⁦index⁩ و دستور بررسی ⁦mapping⁩ از ⁦Elasticsearch.⁩⁩
+9. ⁧در پایان این مرحله فقط ⁦`arxiv_papers_baseline`⁩ ساخته می‌شود. هیچ داده‌ای وارد ⁦index⁩ نمی‌شود؛ ورود داده متعلق به مرحله ⁦4⁩ است. ⁦`arxiv_papers_optimized`⁩ و اجرای ⁦benchmark⁩ نیز خارج از مرحله ⁦3⁩ هستند.⁩
+
 ⁧تعریف دقیق ⁦contain search⁩ و آزمایش زیررشته:⁩
 
 - ⁧⁦contain⁩ اجباری پروژه به معنی وجود واژه، عبارت متوالی، یا شرط‌های مثبت/منفی روی توکن‌هاست؛ این بخش با جست‌وجوی زیررشتهٔ دلخواه یکی نیست و نباید با آن مخلوط شود.⁩
@@ -137,14 +149,30 @@
 ⁧خروجی مورد انتظار:⁩
 
 - ⁧فایل ⁦mapping⁩ خط مبنا، مثلاً ⁦`elasticsearch/mappings/arxiv_papers_baseline.json`⁩⁩
-- ⁧اسکریپت ساخت ⁦index⁩⁩
-- ⁧مستند توضیح نوع هر فیلد⁩
+- ⁧اسکریپت ساخت ⁦index⁩، مثلاً ⁦`scripts/create_index.py`⁩⁩
+- ⁧تست‌های ⁦mapping⁩ و ساختار ⁦index⁩، مثلاً ⁦`tests/test_mapping.py`⁩⁩
+- ⁧مستند توضیح نوع هر فیلد و دستور بازتولید مرحله ⁦3⁩⁩
 
 ⁧معیار اتمام:⁩
 
 - ⁧⁦index⁩ خط مبنا با ⁦mapping⁩ مشخص و نام ثابت ⁦`arxiv_papers_baseline`⁩ ساخته شود.⁩
 - ⁧⁦mapping⁩ قابل بازتولید باشد.⁩
 - ⁧هیچ ⁦dynamic mapping⁩ مبهمی برای فیلدهای اصلی باقی نماند.⁩
+- ⁧تست‌های ⁦mapping⁩ پاس شوند و ثابت کنند ⁦baseline⁩ فاقد ⁦ngram⁩، ⁦edge_ngram⁩، ⁦multi-field⁩ بهینه‌سازی‌شده و فیلد اضافه است.⁩
+- ⁧اسکریپت ساخت ⁦index⁩ بدون ⁦`--recreate`⁩ هیچ ⁦index⁩ موجودی را حذف نکند.⁩
+- ⁧مرحله بدون ورود داده، بدون ساخت ⁦optimized index⁩ و بدون اجرای ⁦benchmark⁩ تمام شود.⁩
+
+⁧نتیجهٔ اجرای واقعی مرحله ⁦3:⁩⁩
+
+- ⁧فایل ⁦`elasticsearch/mappings/arxiv_papers_baseline.json`⁩ ساخته شد.⁩
+- ⁧اسکریپت ⁦`scripts/create_index.py`⁩ ساخته شد و اجرای پیش‌فرض آن فقط ⁦index⁩ موجود را اعتبارسنجی می‌کند؛ حذف و ساخت مجدد فقط با ⁦`--recreate`⁩ انجام می‌شود.⁩
+- ⁧تست ⁦`tests/test_mapping.py`⁩ ساخته شد.⁩
+- ⁧⁦index⁩ واقعی ⁦`arxiv_papers_baseline`⁩ در ⁦Elasticsearch 9.4.4⁩ ساخته و دوباره اعتبارسنجی شد.⁩
+- ⁧هش ⁦SHA-256⁩ فایل ⁦mapping⁩ برابر است با ⁦`c0060d085c1113f2534e9e2638e10b801df4d41dae5b2ca3690ebec27f0b951f`⁩.⁩
+- ⁧تنظیمات واقعی ⁦index⁩ تأیید شد: ⁦`number_of_shards: 1`⁩، ⁦`number_of_replicas: 0`⁩ و ⁦`dynamic: strict`⁩.⁩
+- ⁧تعداد سندهای ⁦`arxiv_papers_baseline`⁩ پس از مرحله ⁦3⁩ برابر ⁦0⁩ است؛ داده هنوز وارد نشده و ورود داده متعلق به مرحله ⁦4⁩ است.⁩
+- ⁧⁦`arxiv_papers_optimized`⁩ ساخته نشده و هیچ ⁦benchmark⁩ اجرا نشده است.⁩
+- ⁧همهٔ تست‌های فعلی پروژه با ⁦`conda run --no-capture-output -n ai_agent python -m pytest`⁩ پاس شدند: ⁦25 passed⁩.⁩
 
 ## ⁧مرحله ⁦4:⁩ ورود دسته‌ای داده به پایگاه داده⁩
 
