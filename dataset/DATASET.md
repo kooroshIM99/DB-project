@@ -11,6 +11,16 @@
 - اعتبارسنج مستقل دیتاست: `scripts/validate_cleaned_dataset.py`
 - تست‌های پاک‌سازی: `tests/test_clean_dataset.py`
 
+## منبع و منشأ داده
+
+- منبع بالادستی متادیتای arXiv: [Cornell University arXiv Dataset on Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv)
+- مجوز متادیتای منبع: CC0 1.0 طبق data card منبع بالادستی
+- فایل خام تحویلی این پروژه یک نمونهٔ ۵۰٬۰۰۰ رکوردی با نام
+  `arxiv_project_sample_50k.jsonl` است.
+- مخزن، seed یا کد نمونه‌گیری این فایل ۵۰هزار رکوردی را در اختیار ندارد؛
+  بنابراین منشأ بالادستی، hash و اندازهٔ فایل محلی ثبت می‌شوند، اما روش دقیق
+  استخراج نمونه به‌عنوان محدودیت provenance گزارش می‌شود.
+
 | ویژگی | فایل خام | فایل پاک‌شده |
 |---|---:|---:|
 | تعداد رکورد | 50,000 | 50,000 |

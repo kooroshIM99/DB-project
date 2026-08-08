@@ -331,8 +331,9 @@ Verified decisions and trade-offs:
   final primary/hybrid query execution does not use it.
 - Batch=1000 was only 1.316% faster than batch=500, and disabling refresh was
   slower; the main comparison remains batch=500 with default refresh.
-- N-grams cost storage and ingestion time: about 294MB versus 103MB baseline,
-  and about 20.5s ingestion versus 7.7s baseline.
+- N-grams cost storage and ingestion time: optimized was about 294MB immediately
+  after ingestion and 366MB in the comparison snapshot, versus 103MB baseline;
+  ingestion took about 20.5s versus 7.7s baseline.
 - Precision@10 is unchanged for every stage-6 method/query pair. All nine
   stage-5, twelve stage-6, and ten stage-8 scenarios completed with zero errors.
 - The optimized load run recorded 984,503 searches and clear pressure by ten

@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-08-08T08:24:39.652Z",
+  "checks": [
+    {
+      "document_count": 50000,
+      "document_count_passed": true,
+      "expected_document_count": 50000,
+      "index": "arxiv_papers_baseline",
+      "query_passed": true,
+      "query_returned_hits": 1,
+      "query_total_hits": 7321
+    },
+    {
+      "document_count": 50000,
+      "document_count_passed": true,
+      "expected_document_count": 50000,
+      "index": "arxiv_papers_optimized",
+      "query_passed": true,
+      "query_returned_hits": 1,
+      "query_total_hits": 7321
+    }
+  ],
+  "cluster_health": "green",
+  "cluster_name": "db-project-es",
+  "elasticsearch_version": "9.4.4",
+  "expected_elasticsearch_version": "9.4.4",
+  "host": "http://127.0.0.1:9200",
+  "query": {
+    "query": {
+      "match": {
+        "title_abstract": "query optimization"
+      }
+    },
+    "size": 1,
+    "track_total_hits": true
+  },
+  "query_sha256": "ee3d00e06b63cc191a39e52a24b5aaa93e9f1ee26f32d82772152d5e6a3cefa2",
+  "status": "passed"
+}

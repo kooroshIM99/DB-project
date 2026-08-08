@@ -1,0 +1,345 @@
+{
+  "benchmark_traceability": [
+    {
+      "artifact_hash_checks": {
+        "dataset": true,
+        "ingestion_report": true,
+        "mapping": true,
+        "query_contract": true
+      },
+      "benchmark_type": "baseline_single_client_search",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_baseline",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/search_baseline.json",
+      "seed": 20250808,
+      "sha256": "4ccfcd3414f095b76c6db094271ed95f90dd664e441f4c04a5e6be3e1ab8aa36",
+      "traceability_complete": true
+    },
+    {
+      "artifact_hash_checks": {
+        "dataset": true,
+        "ingestion_report": true,
+        "mapping": true,
+        "query_contract": true
+      },
+      "benchmark_type": "optimized_single_client_search",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_optimized",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/search_optimized.json",
+      "seed": 20250808,
+      "sha256": "5ca59410c4f74d0a53475adddf0fec40e3a3c2b31bbc91fc68214cd54c0dd3c1",
+      "traceability_complete": true
+    },
+    {
+      "artifact_hash_checks": {
+        "contract": true,
+        "dataset": true,
+        "ingestion_report": true,
+        "mapping": true
+      },
+      "benchmark_type": "stage6_hybrid_comparison",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_baseline",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/hybrid_comparison.json",
+      "seed": 20250808,
+      "sha256": "abbfa30b028a57dc27b302667eaa8c72a1edad4866dc52070781297b8de75cff",
+      "traceability_complete": true
+    },
+    {
+      "artifact_hash_checks": {
+        "contract": true,
+        "dataset": true,
+        "ingestion_report": true,
+        "mapping": true
+      },
+      "benchmark_type": "stage6_hybrid_comparison_optimized",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_optimized",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/hybrid_comparison_optimized.json",
+      "seed": 20250808,
+      "sha256": "e90a2429a3bb0631796eb7f4538eba3bfb13d468e96a29d4a23c58dc7c3be1fe",
+      "traceability_complete": true
+    },
+    {
+      "artifact_hash_checks": {
+        "base_queries": true,
+        "dataset": true,
+        "hybrid_queries": true,
+        "ingestion_report": true,
+        "load_contract": true,
+        "mapping": true,
+        "measurements": true
+      },
+      "benchmark_type": "load_test",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_baseline",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/load_test_baseline.json",
+      "seed": 20250808,
+      "sha256": "7f99952afe6382b3289afae1c09062ecd3173591a2c491deccf8501292c028a3",
+      "traceability_complete": true
+    },
+    {
+      "artifact_hash_checks": {
+        "base_queries": true,
+        "dataset": true,
+        "hybrid_queries": true,
+        "ingestion_report": true,
+        "load_contract": true,
+        "mapping": true,
+        "measurements": true
+      },
+      "benchmark_type": "load_test",
+      "container_cpu_limit": 2.0,
+      "container_memory_limit_bytes": 2147483648,
+      "elasticsearch_version": "9.4.4",
+      "index": "arxiv_papers_optimized",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "path": "results/load_test_optimized.json",
+      "seed": 20250808,
+      "sha256": "c4601f2275989386946727f279a5590efb3feac6c6022a0e32dd02301d16563c",
+      "traceability_complete": true
+    }
+  ],
+  "dataset": {
+    "files": [
+      {
+        "expected": {
+          "sha256": "190b0a678f946338d9daa100a193e8b9ea59c56cf14157f288ee77b05cf03f84",
+          "size_bytes": 141586787
+        },
+        "path": "dataset/arxiv_project_sample_50k.jsonl",
+        "sha256": "190b0a678f946338d9daa100a193e8b9ea59c56cf14157f288ee77b05cf03f84",
+        "size_bytes": 141586787,
+        "verified": true
+      },
+      {
+        "expected": {
+          "sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+          "size_bytes": 141586775
+        },
+        "path": "dataset/arxiv_project_sample_50k_cleaned.jsonl",
+        "sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+        "size_bytes": 141586775,
+        "verified": true
+      }
+    ],
+    "sample_provenance_limitation": "The supplied repository does not contain the sampling seed or extraction code for the local 50k sample.",
+    "upstream_license": "CC0 1.0 metadata (per upstream data card)",
+    "upstream_source": "https://www.kaggle.com/datasets/Cornell-University/arxiv"
+  },
+  "environment": {
+    "docker": "28.3.2",
+    "docker_compose": "2.38.2-desktop.1",
+    "elasticsearch": "9.4.4",
+    "fixed_resources": {
+      "container_memory": "2g",
+      "cpu_limit": 2.0,
+      "heap": "1g",
+      "replicas": 0
+    },
+    "matplotlib": "3.10.7",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "pytest": "9.1.1",
+    "python": "3.11.8"
+  },
+  "essential_artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "73953de09f3e883e988a501b27cdc0e0410fdcdf8dda2c6fec41849b7f309445",
+      "size_bytes": 12315
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "a95f59b188c9b6769acd4d1bb25564bb3a918f39e486e9b539b12f09362f26d8",
+      "size_bytes": 33
+    },
+    {
+      "path": "docker-compose.yml",
+      "sha256": "24c62683b6012dfb46f20d97a2aa98d7b532381bcb7a5a00c7fb76182c897502",
+      "size_bytes": 1055
+    },
+    {
+      "path": "dataset/DATASET.md",
+      "sha256": "582d53a297c371a4fb01a88bfb14af60a96063ad8be98d9a1e9c4603aa485139",
+      "size_bytes": 10897
+    },
+    {
+      "path": "elasticsearch/README.md",
+      "sha256": "72aec2f52032c321a8b209c09df0c4c75b5328052d5c5a81c2e5746f30ecba6e",
+      "size_bytes": 15164
+    },
+    {
+      "path": "reports/final-report.md",
+      "sha256": "acccbe7470edc376b3d5840676a35dcae59571fba683de225e7411d4ced58d8c",
+      "size_bytes": 9331
+    },
+    {
+      "path": "scripts/smoke_test.py",
+      "sha256": "8e60564fec4b383f1b116745c57c7048fe378f7c4e667a7e122d86323384bd14",
+      "size_bytes": 4410
+    },
+    {
+      "path": "scripts/build_reproducibility_manifest.py",
+      "sha256": "0bd3f88e860e4cee802c8f73d5a80a146bb8899388e17e0a0bf8e68a306b6201",
+      "size_bytes": 8174
+    },
+    {
+      "path": "scripts/generate_final_report.py",
+      "sha256": "19a23f9308e440a7c01024386632da50967c97286f23c1de435be279d4ddf26b",
+      "size_bytes": 11607
+    },
+    {
+      "path": "results/smoke_test.json",
+      "sha256": "113352ce37cd05f6cba9fe67f1a96a10fb90cd20ea53c4c8adb73a2b6f6509cb",
+      "size_bytes": 1014
+    },
+    {
+      "path": "elasticsearch/mappings/arxiv_papers_baseline.json",
+      "sha256": "c0060d085c1113f2534e9e2638e10b801df4d41dae5b2ca3690ebec27f0b951f",
+      "size_bytes": 1180
+    },
+    {
+      "path": "elasticsearch/mappings/arxiv_papers_optimized.json",
+      "sha256": "28e5def3ac5ab40797ea186d6e9406a3ac66036725ca91d0ab9f785dde87e98a",
+      "size_bytes": 2007
+    },
+    {
+      "path": "queries/search_queries.json",
+      "sha256": "68ab75bf6dd8919f244150cc00f82f0f6106b2d1a8e1b13fa7f63357dffdbeeb",
+      "size_bytes": 6929
+    },
+    {
+      "path": "queries/search_queries_optimized.json",
+      "sha256": "dc2ba2a74cf502d7de6b9697a532abd2f8a7a5b9a332f983662f284e2443d23e",
+      "size_bytes": 9996
+    },
+    {
+      "path": "queries/hybrid_comparison_queries.json",
+      "sha256": "0a2df2c840e0d9e65c39f6f2b1490166c7ec2adb168dfdf497ee563f7d923da5",
+      "size_bytes": 6630
+    },
+    {
+      "path": "queries/hybrid_comparison_queries_optimized.json",
+      "sha256": "249d2a930f30abb230b045c0722b30bd3489d6f8c4fa4486a4797d64ed00d8fe",
+      "size_bytes": 7842
+    },
+    {
+      "path": "queries/load_test_scenarios.json",
+      "sha256": "426280d5681320d312d6c14319bdc7f94ba9ad4eb9f005a71dbf8e5289e5ff4e",
+      "size_bytes": 2811
+    },
+    {
+      "path": "queries/load_test_scenarios_optimized.json",
+      "sha256": "ccb8e391c8582161c5530e3ef085e9e2a5425707bb071f3368b269399f5ac810",
+      "size_bytes": 3258
+    },
+    {
+      "path": "results/search_baseline.json",
+      "sha256": "4ccfcd3414f095b76c6db094271ed95f90dd664e441f4c04a5e6be3e1ab8aa36",
+      "size_bytes": 89930
+    },
+    {
+      "path": "results/search_optimized.json",
+      "sha256": "5ca59410c4f74d0a53475adddf0fec40e3a3c2b31bbc91fc68214cd54c0dd3c1",
+      "size_bytes": 89764
+    },
+    {
+      "path": "results/hybrid_comparison.json",
+      "sha256": "abbfa30b028a57dc27b302667eaa8c72a1edad4866dc52070781297b8de75cff",
+      "size_bytes": 290002
+    },
+    {
+      "path": "results/hybrid_comparison_optimized.json",
+      "sha256": "e90a2429a3bb0631796eb7f4538eba3bfb13d468e96a29d4a23c58dc7c3be1fe",
+      "size_bytes": 290698
+    },
+    {
+      "path": "results/hybrid_quality.json",
+      "sha256": "d191bb18e8a53c94efe29cf49efca0ee42f517321596a1d953a150bc38c7fbea",
+      "size_bytes": 4387
+    },
+    {
+      "path": "results/hybrid_quality_optimized.json",
+      "sha256": "41cc175815eae2ff01d547d7b17cbd77c82fb632c1b4ed07bb8eb7eb985b88d5",
+      "size_bytes": 4407
+    },
+    {
+      "path": "results/load_test_baseline.json",
+      "sha256": "7f99952afe6382b3289afae1c09062ecd3173591a2c491deccf8501292c028a3",
+      "size_bytes": 249222
+    },
+    {
+      "path": "results/load_test_optimized.json",
+      "sha256": "c4601f2275989386946727f279a5590efb3feac6c6022a0e32dd02301d16563c",
+      "size_bytes": 249343
+    },
+    {
+      "path": "results/load_test_measurements.jsonl.gz",
+      "sha256": "5c909173e1d70bb391997079d0d77b0be523bd0aa5143592a9dd51aae9c5be71",
+      "size_bytes": 15426354
+    },
+    {
+      "path": "results/load_test_optimized_measurements.jsonl.gz",
+      "sha256": "16cb9f533caa9d03b9fa5f8875da055db52c5191376fbe90937f7e67d072d6fa",
+      "size_bytes": 18096915
+    },
+    {
+      "path": "results/stage9_ablations.json",
+      "sha256": "f222b198633380a49213c1c206b64c9caf8d446e0911c672d3623cc0c27d721c",
+      "size_bytes": 6380
+    },
+    {
+      "path": "results/stage9_comparison.json",
+      "sha256": "b3dea62ab5dccbdf6ce2e9a0c5e955bafa26b77d81fb688f5c30a266de0edc48",
+      "size_bytes": 28359
+    },
+    {
+      "path": "results/metrics_summary.json",
+      "sha256": "bfff6e35c05bb66a5de540c50a16d264d1043ae281ddfa25a7c2a2d4ff002bb6",
+      "size_bytes": 66115
+    },
+    {
+      "path": "results/metrics_summary.csv",
+      "sha256": "ebb711b65780d48243fc48176337e1bf952c6bb1360ad7497fa44edc293db9ee",
+      "size_bytes": 17780
+    },
+    {
+      "path": "results/stage9_search_before_after.png",
+      "sha256": "cc3a6d65a06e9b446a14107c3a70d846c8dc534a4a26ce344f0851a8ef62bc75",
+      "size_bytes": 122587
+    },
+    {
+      "path": "results/stage9_load_before_after.png",
+      "sha256": "15ce946fc4252640a75ddd38f42f3461c5d2bc17082be3684b88224ab61d0016",
+      "size_bytes": 77905
+    }
+  ],
+  "generated_at": "2026-08-08T08:25:31.257Z",
+  "status": "passed",
+  "validation": {
+    "all_benchmarks_traceable": true,
+    "all_datasets_verified": true,
+    "essential_artifact_count": 34
+  }
+}
