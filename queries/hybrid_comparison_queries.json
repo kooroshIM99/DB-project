@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "description": "Stage-6 fixed logical, execution, and RRF contract for the three required comparison queries.",
+  "defaults": {
+    "index": "arxiv_papers_baseline",
+    "candidate_size": 100,
+    "output_size": 10,
+    "track_total_hits": true
+  },
+  "architecture": {
+    "initial_parallel_methods": ["keyword", "contain"],
+    "rrf_k": 60,
+    "weights": {
+      "keyword": 1.0,
+      "contain": 0.9,
+      "fuzzy": 0.65
+    },
+    "fuzzy_trigger": {
+      "minimum_unique_candidates": 20,
+      "overlap_rank_depth": 10,
+      "trigger_for_typo_scenarios": true
+    },
+    "weights_and_thresholds_tuned_on_comparison_queries": false
+  },
+  "queries": [
+    {
+      "id": "learned_indexes",
+      "user_input": "learned indexes",
+      "relevance_concept": "learned index data structures or learned database indexing",
+      "mandatory_typo_scenario": false,
+      "methods": {
+        "keyword": {
+          "fields": ["title^2", "abstract", "title_abstract"],
+          "operator": "or",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "learned indexes",
+                "fields": ["title^2", "abstract", "title_abstract"],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            }
+          }
+        },
+        "contain": {
+          "fields": ["title", "abstract"],
+          "semantics": "consecutive_phrase",
+          "slop": 0,
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "learned indexes",
+                "fields": ["title", "abstract"],
+                "type": "phrase",
+                "slop": 0
+              }
+            }
+          }
+        },
+        "fuzzy": {
+          "fields": ["title^2", "abstract"],
+          "fuzziness": "AUTO",
+          "prefix_length": 1,
+          "operator": "and",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "learned indexes",
+                "fields": ["title^2", "abstract"],
+                "type": "best_fields",
+                "fuzziness": "AUTO",
+                "prefix_length": 1,
+                "operator": "and"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "query_optimization",
+      "user_input": "query optimization",
+      "relevance_concept": "database or information-system query optimization",
+      "mandatory_typo_scenario": false,
+      "methods": {
+        "keyword": {
+          "fields": ["title^2", "abstract", "title_abstract"],
+          "operator": "or",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "query optimization",
+                "fields": ["title^2", "abstract", "title_abstract"],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            }
+          }
+        },
+        "contain": {
+          "fields": ["title", "abstract"],
+          "semantics": "consecutive_phrase",
+          "slop": 0,
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "query optimization",
+                "fields": ["title", "abstract"],
+                "type": "phrase",
+                "slop": 0
+              }
+            }
+          }
+        },
+        "fuzzy": {
+          "fields": ["title^2", "abstract"],
+          "fuzziness": "AUTO",
+          "prefix_length": 1,
+          "operator": "and",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "query optimization",
+                "fields": ["title^2", "abstract"],
+                "type": "best_fields",
+                "fuzziness": "AUTO",
+                "prefix_length": 1,
+                "operator": "and"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "databse_optimiztion",
+      "user_input": "databse optimiztion",
+      "corrected_concept": "database optimization",
+      "relevance_concept": "database optimization despite the input typographical errors",
+      "mandatory_typo_scenario": true,
+      "methods": {
+        "keyword": {
+          "fields": ["title^2", "abstract", "title_abstract"],
+          "operator": "or",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "databse optimiztion",
+                "fields": ["title^2", "abstract", "title_abstract"],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            }
+          }
+        },
+        "contain": {
+          "fields": ["title", "abstract"],
+          "semantics": "consecutive_phrase",
+          "slop": 0,
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "databse optimiztion",
+                "fields": ["title", "abstract"],
+                "type": "phrase",
+                "slop": 0
+              }
+            }
+          }
+        },
+        "fuzzy": {
+          "fields": ["title^2", "abstract"],
+          "fuzziness": "AUTO",
+          "prefix_length": 1,
+          "operator": "and",
+          "dsl": {
+            "size": 100,
+            "track_total_hits": true,
+            "_source": ["paper_id", "title", "abstract"],
+            "query": {
+              "multi_match": {
+                "query": "databse optimiztion",
+                "fields": ["title^2", "abstract"],
+                "type": "best_fields",
+                "fuzziness": "AUTO",
+                "prefix_length": 1,
+                "operator": "and"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

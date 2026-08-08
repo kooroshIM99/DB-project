@@ -151,6 +151,84 @@ Changing the index, execution variant, warm-ups below five, or iterations below
 30 is rejected by default. `--allow-nonstandard` permits quick diagnostic runs,
 but marks their output as non-baseline and non-compliant.
 
+## Stage 6 Hybrid Search
+
+The fixed comparison query/DSL and weighted-RRF architecture contract is in
+`queries/hybrid_comparison_queries.json`. Run the full four-method comparison:
+
+```bash
+python scripts/hybrid_search.py
+```
+
+This compares keyword-only, contain-only, fuzzy-only, and hybrid for `learned
+indexes`, `query optimization`, and `databse optimiztion`. Keyword and contain
+run concurrently inside hybrid. Fuzzy is added only when the merged candidate
+count is below 20, both initial top-10 lists have no shared document, or the
+query is the mandatory typo scenario. Ranking uses weighted RRF with `k=60` and
+weights `1.00`, `0.90`, and `0.65`; raw Elasticsearch scores are never added.
+
+After manually completing the generated relevance template using only
+`relevant` or `not_relevant`, validate it and calculate quality metrics:
+
+```bash
+cp results/relevance_judgments_template.csv results/relevance_judgments.csv
+# Manually fill the judgment and notes columns.
+python scripts/evaluate_relevance.py
+```
+
+Verified stage-6 artifacts:
+
+- `results/hybrid_comparison.json`: request-level performance, RRF/fuzzy
+  decisions, top results, environment, resource samples, and artifact hashes
+- `results/hybrid_performance.csv`: latency, P95, user-facing throughput,
+  internal Elasticsearch request throughput, counts, and errors
+- `results/relevance_judgments.csv`: 101 manual binary judgments; fewer than 120
+  because typo keyword returned one result and typo contain returned none
+- `results/hybrid_quality.csv` and `.json`: validated Precision@10 and
+  Precision@returned summaries
+- `results/stage6_analysis.md`: architecture rationale, tables, and trade-offs
+
+## Stage 7 Metrics Tables and Charts
+
+Validate the stage-5 and stage-6 JSON/CSV artifacts, recalculate their metrics
+from raw request measurements, and generate normalized report outputs:
+
+```bash
+python scripts/plot_metrics.py
+```
+
+The script independently recalculates average end-to-end latency, nearest-rank
+P95, user-facing throughput, internal Elasticsearch request throughput, and
+error rate. It rejects a report when those values disagree with its raw request
+measurements or when the accompanying source CSV disagrees with the JSON. It
+also normalizes document count, index size, Docker CPU/memory, and JVM heap
+metrics into the same row schema.
+
+Generated artifacts:
+
+- `results/metrics_summary.json`: validated normalized schema, input hashes,
+  metric definitions, and all rows
+- `results/metrics_summary.csv`: reusable table for the final report
+- `results/metrics_summary.md`: human-readable report table
+- `results/metrics_baseline_latency.png`: sample matplotlib baseline chart
+- `results/metrics_dashboard.png`: latency, throughput, and resource dashboard
+
+Additional stage-8/stage-9 reports can be included by repeating `--input`:
+
+```bash
+python scripts/plot_metrics.py \
+  --input results/search_baseline.json \
+  --input results/hybrid_comparison.json \
+  --input results/load_test.json \
+  --input results/search_optimized.json
+```
+
+Future inputs are accepted by their operational schema rather than a fixed list
+of benchmark names: they must contain raw request measurements, scenario method
+and identifier, index metadata, system metrics, and an accompanying CSV with the
+same stem. This preserves the same latency, P95, throughput, and error-rate
+definitions across baseline, load-test, and optimized runs.
+
 ### Verified Stage 4 Result
 
 - Status: passed

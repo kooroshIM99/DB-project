@@ -1,0 +1,13 @@
+query_id,user_input,method,result_count,result_count_semantics,average_latency_ms,p95_latency_ms,user_facing_throughput_per_second,internal_elasticsearch_request_throughput_per_second,successful_request_count,error_count,error_rate,fuzzy_executed,fuzzy_trigger_reasons
+databse_optimiztion,databse optimiztion,contain,0,exact Elasticsearch total hits,1.210297,2.579125,818.433858,818.433858,30,0,0.0,False,
+databse_optimiztion,databse optimiztion,fuzzy,828,exact Elasticsearch total hits,7.254671,8.308041,135.916168,135.916168,30,0,0.0,True,
+databse_optimiztion,databse optimiztion,hybrid,101,exact unique candidates within configured retrieval windows,9.326289,10.96275,106.590821,319.772464,30,0,0.0,True,unique_candidates_below_20|no_shared_document_in_both_top_10_lists|mandatory_typo_scenario
+databse_optimiztion,databse optimiztion,keyword,1,exact Elasticsearch total hits,1.354122,2.462375,733.98911,733.98911,30,0,0.0,False,
+learned_indexes,learned indexes,contain,75,exact Elasticsearch total hits,3.860763,4.792375,255.292896,255.292896,30,0,0.0,False,
+learned_indexes,learned indexes,fuzzy,319,exact Elasticsearch total hits,6.176528,7.824584,159.13867,159.13867,30,0,0.0,True,
+learned_indexes,learned indexes,hybrid,123,exact unique candidates within configured retrieval windows,5.020385,6.177,196.887643,393.775287,30,0,0.0,False,
+learned_indexes,learned indexes,keyword,2529,exact Elasticsearch total hits,4.41981,7.1715,220.501831,220.501831,30,0,0.0,False,
+query_optimization,query optimization,contain,308,exact Elasticsearch total hits,3.538972,4.531083,273.659269,273.659269,30,0,0.0,False,
+query_optimization,query optimization,fuzzy,647,exact Elasticsearch total hits,5.840042,7.181167,168.166541,168.166541,30,0,0.0,True,
+query_optimization,query optimization,hybrid,125,exact unique candidates within configured retrieval windows,5.919132,7.244625,166.013527,332.027054,30,0,0.0,False,
+query_optimization,query optimization,keyword,7321,exact Elasticsearch total hits,4.129647,5.151459,238.218442,238.218442,30,0,0.0,False,

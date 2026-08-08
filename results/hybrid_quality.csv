@@ -1,0 +1,13 @@
+query_id,query,method,total_result_count,returned_count,judged_count,missing_ranks,relevant_count,precision_at_10,precision_at_returned
+databse_optimiztion,databse optimiztion,contain,0,0,0,10,0,0.0,
+databse_optimiztion,databse optimiztion,fuzzy,828,10,10,0,9,0.9,0.9
+databse_optimiztion,databse optimiztion,hybrid,101,10,10,0,8,0.8,0.8
+databse_optimiztion,databse optimiztion,keyword,1,1,1,9,0,0.0,0.0
+learned_indexes,learned indexes,contain,75,10,10,0,10,1.0,1.0
+learned_indexes,learned indexes,fuzzy,319,10,10,0,10,1.0,1.0
+learned_indexes,learned indexes,hybrid,123,10,10,0,10,1.0,1.0
+learned_indexes,learned indexes,keyword,2529,10,10,0,10,1.0,1.0
+query_optimization,query optimization,contain,308,10,10,0,9,0.9,0.9
+query_optimization,query optimization,fuzzy,647,10,10,0,9,0.9,0.9
+query_optimization,query optimization,hybrid,125,10,10,0,9,0.9,0.9
+query_optimization,query optimization,keyword,7321,10,10,0,9,0.9,0.9
