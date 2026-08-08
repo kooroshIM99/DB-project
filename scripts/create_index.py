@@ -60,15 +60,16 @@ def sha256_file(path: Path) -> str:
 
 
 def validate_mapping_file(mapping: dict[str, Any]) -> None:
+    optimized = mapping.get("mappings", {}).get("_meta", {}).get("stage") == "9"
     settings = mapping.get("settings", {}).get("index", {})
     if settings.get("number_of_shards") != 1:
-        raise ElasticsearchError("baseline mapping must set number_of_shards to 1")
+        raise ElasticsearchError("mapping must set number_of_shards to 1")
     if settings.get("number_of_replicas") != 0:
-        raise ElasticsearchError("baseline mapping must set number_of_replicas to 0")
+        raise ElasticsearchError("mapping must set number_of_replicas to 0")
 
-    if "analysis" in mapping.get("settings", {}).get("index", {}):
+    if not optimized and "analysis" in mapping.get("settings", {}).get("index", {}):
         raise ElasticsearchError("baseline mapping must not define custom analysis")
-    if "analysis" in mapping.get("settings", {}):
+    if not optimized and "analysis" in mapping.get("settings", {}):
         raise ElasticsearchError("baseline mapping must not define custom analysis")
 
     mappings = mapping.get("mappings", {})
@@ -83,7 +84,7 @@ def validate_mapping_file(mapping: dict[str, Any]) -> None:
         extra = sorted(set(properties) - set(EXPECTED_FIELDS))
         raise ElasticsearchError(f"unexpected baseline fields; missing={missing}, extra={extra}")
 
-    forbidden_tokens = ("ngram", "edge_ngram", "fields")
+    forbidden_tokens = ("ngram", "edge_ngram", "fields") if not optimized else ()
     serialized = json.dumps(mapping, sort_keys=True)
     for token in forbidden_tokens:
         if token in serialized:
@@ -215,7 +216,7 @@ def validate_remote_index(base_url: str, index: str, expected: dict[str, Any]) -
                     f"remote field {field!r} has {key}={remote_field.get(key)!r}; "
                     f"expected {expected_value!r}"
                 )
-        if "fields" in remote_field:
+        if "fields" in remote_field and "fields" not in expected_field:
             raise ElasticsearchError(f"remote field {field!r} unexpectedly defines multi-fields")
 
 

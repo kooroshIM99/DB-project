@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "description": "Stage-9 optimized execution contract preserving the stage-5 logical query set.",
+  "defaults": {
+    "index": "arxiv_papers_optimized",
+    "size": 10,
+    "track_total_hits": true
+  },
+  "queries": [
+    {
+      "id": "keyword_query_optimization",
+      "type": "keyword",
+      "intent": "Find articles related to query optimization.",
+      "user_input": "query optimization",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title^2",
+            "abstract"
+          ],
+          "operator": "or",
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "query optimization",
+                "fields": [
+                  "title^2",
+                  "abstract"
+                ],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "keyword_distributed_database",
+      "type": "keyword",
+      "intent": "Find articles related to distributed databases.",
+      "user_input": "distributed database",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title^2",
+            "abstract"
+          ],
+          "operator": "or",
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "distributed database",
+                "fields": [
+                  "title^2",
+                  "abstract"
+                ],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "keyword_learned_indexes_cs_db",
+      "type": "keyword",
+      "intent": "Find articles related to learned indexes in category cs.DB.",
+      "user_input": "learned indexes",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title^2",
+            "abstract"
+          ],
+          "operator": "or",
+          "filter_context": {
+            "categories": "cs.DB"
+          },
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "multi_match": {
+                      "query": "learned indexes",
+                      "fields": [
+                        "title^2",
+                        "abstract"
+                      ],
+                      "type": "best_fields",
+                      "operator": "or"
+                    }
+                  }
+                ],
+                "filter": [
+                  {
+                    "term": {
+                      "categories": "cs.DB"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "contain_database_systems_phrase",
+      "type": "contain",
+      "intent": "Find articles containing the consecutive phrase database systems in title or abstract.",
+      "user_input": "database systems",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title",
+            "abstract"
+          ],
+          "semantics": "consecutive_phrase",
+          "slop": 0,
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "database systems",
+                "fields": [
+                  "title",
+                  "abstract"
+                ],
+                "type": "phrase",
+                "slop": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "contain_indexing_not_blockchain",
+      "type": "contain",
+      "intent": "Find articles containing indexing but not blockchain.",
+      "user_input": "indexing NOT blockchain",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title",
+            "abstract"
+          ],
+          "semantics": "required_term_and_excluded_term",
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "multi_match": {
+                      "query": "indexing",
+                      "fields": [
+                        "title",
+                        "abstract"
+                      ],
+                      "operator": "and"
+                    }
+                  }
+                ],
+                "must_not": [
+                  {
+                    "multi_match": {
+                      "query": "blockchain",
+                      "fields": [
+                        "title",
+                        "abstract"
+                      ],
+                      "operator": "or"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "contain_processing_phrases_any",
+      "type": "contain",
+      "intent": "Find articles containing at least one of query processing, storage engine, or transaction processing as a consecutive phrase.",
+      "user_input": [
+        "query processing",
+        "storage engine",
+        "transaction processing"
+      ],
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title",
+            "abstract"
+          ],
+          "semantics": "any_consecutive_phrase",
+          "slop": 0,
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "bool": {
+                "should": [
+                  {
+                    "multi_match": {
+                      "query": "query processing",
+                      "fields": [
+                        "title",
+                        "abstract"
+                      ],
+                      "type": "phrase",
+                      "slop": 0
+                    }
+                  },
+                  {
+                    "multi_match": {
+                      "query": "storage engine",
+                      "fields": [
+                        "title",
+                        "abstract"
+                      ],
+                      "type": "phrase",
+                      "slop": 0
+                    }
+                  },
+                  {
+                    "multi_match": {
+                      "query": "transaction processing",
+                      "fields": [
+                        "title",
+                        "abstract"
+                      ],
+                      "type": "phrase",
+                      "slop": 0
+                    }
+                  }
+                ],
+                "minimum_should_match": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fuzzy_databse_optimiztion",
+      "type": "fuzzy",
+      "intent": "Find database optimization articles despite typographical errors.",
+      "user_input": "databse optimiztion",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title^2",
+            "abstract"
+          ],
+          "fuzziness": "AUTO",
+          "prefix_length": 1,
+          "operator": "and",
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "databse optimiztion",
+                "fields": [
+                  "title^2",
+                  "abstract"
+                ],
+                "fuzziness": "AUTO",
+                "prefix_length": 1,
+                "operator": "and"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fuzzy_transacton_procesing",
+      "type": "fuzzy",
+      "intent": "Find transaction processing articles despite typographical errors.",
+      "user_input": "transacton procesing",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title^2",
+            "abstract"
+          ],
+          "fuzziness": "AUTO",
+          "prefix_length": 1,
+          "operator": "and",
+          "dsl": {
+            "size": 10,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "transacton procesing",
+                "fields": [
+                  "title^2",
+                  "abstract"
+                ],
+                "fuzziness": "AUTO",
+                "prefix_length": 1,
+                "operator": "and"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aggregation_query_optimization",
+      "type": "aggregation",
+      "intent": "Analyze query optimization results by year and scientific category.",
+      "user_input": "query optimization",
+      "execution": {
+        "optimized": {
+          "fields": [
+            "title",
+            "abstract"
+          ],
+          "aggregations": [
+            "year",
+            "categories"
+          ],
+          "dsl": {
+            "size": 0,
+            "track_total_hits": true,
+            "query": {
+              "multi_match": {
+                "query": "query optimization",
+                "fields": [
+                  "title^2",
+                  "abstract"
+                ],
+                "type": "best_fields",
+                "operator": "or"
+              }
+            },
+            "aggs": {
+              "by_year": {
+                "terms": {
+                  "field": "year",
+                  "size": 30,
+                  "order": {
+                    "_key": "asc"
+                  }
+                }
+              },
+              "by_category": {
+                "terms": {
+                  "field": "categories",
+                  "size": 20
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+

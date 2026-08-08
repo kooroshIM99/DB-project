@@ -1,0 +1,3155 @@
+{
+  "artifacts": {
+    "dataset_path": "dataset/arxiv_project_sample_50k_cleaned.jsonl",
+    "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+    "dataset_size_bytes": 141586775,
+    "execution_query_contract_sha256": "00c244f5be86423a272298e48b7327cdd3eb94592efeb47676702ac9391ad700",
+    "ingestion_report_path": "results/ingestion_optimized.json",
+    "ingestion_report_sha256": "4fbd4fd89e0e5ec56f99a5bdb20fa045ef8b7dca05ee3ec57b431b1ec0b25df4",
+    "logical_query_contract_sha256": "5caed3b66b1df57bfae4e45475e16d614a9dfe3acfa78fbfb7635e40f410216a",
+    "mapping_path": "elasticsearch/mappings/arxiv_papers_optimized.json",
+    "mapping_sha256": "28e5def3ac5ab40797ea186d6e9406a3ac66036725ca91d0ab9f785dde87e98a",
+    "query_contract_path": "queries/search_queries_optimized.json",
+    "query_contract_sha256": "dc2ba2a74cf502d7de6b9697a532abd2f8a7a5b9a332f983662f284e2443d23e"
+  },
+  "benchmark_type": "optimized_single_client_search",
+  "duration_seconds_including_metadata_and_sampling": 2.114769,
+  "execution": "optimized",
+  "finished_at": "2026-08-08T07:50:20.761Z",
+  "host": "http://127.0.0.1:9200",
+  "index": "arxiv_papers_optimized",
+  "ingestion_contract": {
+    "batch_size": 500,
+    "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+    "document_count": 50000,
+    "index": "arxiv_papers_optimized"
+  },
+  "is_performance_baseline": false,
+  "protocol": {
+    "cache_cleared": false,
+    "client_count": 1,
+    "ingestion_batch_size": 500,
+    "latency_definition": "client end-to-end request/complete-response wall time",
+    "measured_iterations_per_query": 30,
+    "p95_definition": "nearest-rank percentile over successful measured requests",
+    "query_scenario_order": [
+      "fuzzy_databse_optimiztion",
+      "aggregation_query_optimization",
+      "keyword_distributed_database",
+      "keyword_query_optimization",
+      "contain_processing_phrases_any",
+      "contain_database_systems_phrase",
+      "contain_indexing_not_blockchain",
+      "keyword_learned_indexes_cs_db",
+      "fuzzy_transacton_procesing"
+    ],
+    "query_scenario_order_seed": 20250808,
+    "request_timeout_seconds": 10.0,
+    "resource_sample_interval_seconds": 1.0,
+    "resource_sources": [
+      "docker stats",
+      "Elasticsearch nodes stats API"
+    ],
+    "throughput_definition": "successful requests / measured scenario wall time",
+    "track_total_hits": true,
+    "warmups_excluded_from_metrics": true,
+    "warmups_per_query": 5
+  },
+  "protocol_compliant": true,
+  "resource_metrics_complete": true,
+  "resource_samples": [
+    {
+      "docker": {
+        "block_io": "260MB / 2.48GB",
+        "cpu_percent": 26.37,
+        "memory_percent": 77.44,
+        "memory_usage": "1.549GiB / 2GiB",
+        "network_io": "1.46GB / 32.9GB",
+        "pids": 98
+      },
+      "elasticsearch": {
+        "jvm_heap_used_bytes": 343225784.0,
+        "jvm_heap_used_percent": 31.0,
+        "os_cpu_percent": 2.0,
+        "process_cpu_percent": 2.0,
+        "process_virtual_memory_bytes": 9326997504.0
+      },
+      "monotonic_seconds": 641942.817818916,
+      "sampled_at": "2026-08-08T07:50:18.778Z"
+    }
+  ],
+  "runtime": {
+    "cluster_name": "db-project-es",
+    "container": {
+      "available": true,
+      "cpu_limit": 2.0,
+      "image": "docker.elastic.co/elasticsearch/elasticsearch:9.4.4",
+      "memory_limit_bytes": 2147483648,
+      "name": "db-project-elasticsearch",
+      "nano_cpus": 2000000000,
+      "status": "running"
+    },
+    "docker_compose_error": null,
+    "docker_compose_version": "2.38.2-desktop.1",
+    "docker_error": null,
+    "docker_version": "28.3.2",
+    "elasticsearch_node_configuration": {
+      "nodes": {
+        "7zdb6YAmThK6hgdN6ARONQ": {
+          "jvm": {
+            "input_arguments": [
+              "-Des.networkaddress.cache.ttl=60",
+              "-Des.networkaddress.cache.negative.ttl=10",
+              "-XX:+AlwaysPreTouch",
+              "-Xss1m",
+              "-Djava.awt.headless=true",
+              "-Dfile.encoding=UTF-8",
+              "-Djna.nosys=true",
+              "-XX:-OmitStackTraceInFastThrow",
+              "-Dio.netty.noUnsafe=true",
+              "-Dio.netty.noKeySetOptimization=true",
+              "-Dio.netty.recycler.maxCapacityPerThread=0",
+              "--add-opens=org.apache.lucene.core/org.apache.lucene.codecs.lucene99=org.elasticsearch.server",
+              "--add-opens=org.apache.lucene.core/org.apache.lucene.codecs.hnsw=org.elasticsearch.server",
+              "--add-opens=org.apache.lucene.core/org.apache.lucene.internal.vectorization=org.elasticsearch.server",
+              "-Dlog4j.shutdownHookEnabled=false",
+              "-Dlog4j2.disable.jmx=true",
+              "-Dlog4j2.formatMsgNoLookups=true",
+              "-Djava.locale.providers=CLDR",
+              "-Dorg.apache.lucene.vectorization.upperJavaFeatureVersion=26",
+              "-Des.path.home=/usr/share/elasticsearch",
+              "-Des.distribution.type=docker",
+              "-Des.java.type=bundled JDK",
+              "--enable-native-access=org.elasticsearch.nativeaccess,org.apache.lucene.core",
+              "--enable-native-access=ALL-UNNAMED",
+              "--illegal-native-access=deny",
+              "-Des.cgroups.hierarchy.override=/",
+              "-XX:ReplayDataFile=logs/replay_pid%p.log",
+              "-XX:+EnableDynamicAgentLoading",
+              "-Djdk.attach.allowAttachSelf=true",
+              "--patch-module=java.base=/usr/share/elasticsearch/lib/entitlement-bridge/elasticsearch-entitlement-bridge-9.4.4.jar",
+              "--add-exports=java.base/org.elasticsearch.entitlement.bridge=org.elasticsearch.entitlement,java.logging,java.net.http,java.naming,jdk.net,jdk.zipfs,jdk.management.agent",
+              "-XX:+UseG1GC",
+              "-Djava.io.tmpdir=/tmp/elasticsearch-4347508845227144691",
+              "--add-modules=jdk.incubator.vector",
+              "-Dorg.apache.lucene.store.defaultReadAdvice=normal",
+              "-Dorg.apache.lucene.store.MMapDirectory.sharedArenaMaxPermits=1",
+              "-XX:+HeapDumpOnOutOfMemoryError",
+              "-XX:+ExitOnOutOfMemoryError",
+              "-XX:ErrorFile=hs_err_pid%p.log",
+              "-Xlog:gc*,gc+age=trace,safepoint:file=gc.log:utctime,level,pid,tags:filecount=32,filesize=64m",
+              "-Xms1g",
+              "-Xmx1g",
+              "-XX:MaxDirectMemorySize=536870912",
+              "-XX:G1HeapRegionSize=4m",
+              "-XX:InitiatingHeapOccupancyPercent=30",
+              "-XX:G1ReservePercent=15",
+              "--module-path=/usr/share/elasticsearch/lib",
+              "--add-modules=jdk.net",
+              "--add-modules=jdk.management.agent",
+              "--add-modules=ALL-MODULE-PATH",
+              "-Djdk.module.main=org.elasticsearch.server"
+            ],
+            "mem": {
+              "heap_max_in_bytes": 1073741824
+            }
+          },
+          "os": {
+            "available_processors": 2
+          }
+        }
+      }
+    },
+    "elasticsearch_version": "9.4.4",
+    "index": {
+      "document_count": 50000,
+      "name": "arxiv_papers_optimized",
+      "number_of_replicas": 0,
+      "number_of_shards": 1,
+      "primary_store_size_bytes": 366392266,
+      "store_size_bytes": 366392266,
+      "uuid": "xQ_i6JMOT62ZUIIofGb26w"
+    },
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "python_version": "3.11.8"
+  },
+  "scenarios": [
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 5.074697,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title^2",
+                "abstract"
+              ],
+              "fuzziness": "AUTO",
+              "operator": "and",
+              "prefix_length": 1,
+              "query": "databse optimiztion"
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title^2",
+          "abstract"
+        ],
+        "fuzziness": "AUTO",
+        "operator": "and",
+        "prefix_length": 1
+      },
+      "execution_contract_sha256": "d748d0f7e1a1fa963a6eba595f40977cb1c0ddace8a9659869f6a6467d2173b0",
+      "finished_at": "2026-08-08T07:50:18.971Z",
+      "finished_monotonic_seconds": 641943.009969958,
+      "intent": "Find database optimization articles despite typographical errors.",
+      "logical_contract_sha256": "9b12e1aeb547ac1891b2a4014b7b81c104d8426b91a45280ae658924079338ad",
+      "maximum_latency_ms": 10.978625,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.152721,
+      "measurements": [
+        {
+          "client_latency_ms": 10.978625,
+          "elasticsearch_took_ms": 8,
+          "request_number": 1,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 6.640166,
+          "elasticsearch_took_ms": 4,
+          "request_number": 2,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.015875,
+          "elasticsearch_took_ms": 3,
+          "request_number": 3,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.796333,
+          "elasticsearch_took_ms": 3,
+          "request_number": 4,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.916042,
+          "elasticsearch_took_ms": 3,
+          "request_number": 5,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.039041,
+          "elasticsearch_took_ms": 3,
+          "request_number": 6,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.412083,
+          "elasticsearch_took_ms": 3,
+          "request_number": 7,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.494417,
+          "elasticsearch_took_ms": 3,
+          "request_number": 8,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.173833,
+          "elasticsearch_took_ms": 3,
+          "request_number": 9,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.570375,
+          "elasticsearch_took_ms": 3,
+          "request_number": 10,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.036166,
+          "elasticsearch_took_ms": 3,
+          "request_number": 11,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.884583,
+          "elasticsearch_took_ms": 3,
+          "request_number": 12,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.266167,
+          "elasticsearch_took_ms": 3,
+          "request_number": 13,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.887709,
+          "elasticsearch_took_ms": 3,
+          "request_number": 14,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.366791,
+          "elasticsearch_took_ms": 3,
+          "request_number": 15,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.783791,
+          "elasticsearch_took_ms": 3,
+          "request_number": 16,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.760708,
+          "elasticsearch_took_ms": 3,
+          "request_number": 17,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.486333,
+          "elasticsearch_took_ms": 3,
+          "request_number": 18,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 6.2445,
+          "elasticsearch_took_ms": 3,
+          "request_number": 19,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.497833,
+          "elasticsearch_took_ms": 3,
+          "request_number": 20,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.559459,
+          "elasticsearch_took_ms": 3,
+          "request_number": 21,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.1705,
+          "elasticsearch_took_ms": 3,
+          "request_number": 22,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.034792,
+          "elasticsearch_took_ms": 3,
+          "request_number": 23,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.367959,
+          "elasticsearch_took_ms": 3,
+          "request_number": 24,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.760792,
+          "elasticsearch_took_ms": 3,
+          "request_number": 25,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.597959,
+          "elasticsearch_took_ms": 3,
+          "request_number": 26,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.679209,
+          "elasticsearch_took_ms": 3,
+          "request_number": 27,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.703916,
+          "elasticsearch_took_ms": 3,
+          "request_number": 28,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.53975,
+          "elasticsearch_took_ms": 3,
+          "request_number": 29,
+          "result_count": 828,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.575208,
+          "elasticsearch_took_ms": 3,
+          "request_number": 30,
+          "result_count": 828,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 4.1705,
+      "p95_latency_ms": 6.640166,
+      "query_id": "fuzzy_databse_optimiztion",
+      "result_count": 828,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:18.818Z",
+      "started_monotonic_seconds": 641942.857128875,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 196.436908,
+      "type": "fuzzy",
+      "user_input": "databse optimiztion",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "aggregation_sample": {
+        "by_category": {
+          "buckets": [
+            {
+              "doc_count": 3224,
+              "key": "cs.LG"
+            },
+            {
+              "doc_count": 1940,
+              "key": "cs.AI"
+            },
+            {
+              "doc_count": 1574,
+              "key": "cs.DB"
+            },
+            {
+              "doc_count": 833,
+              "key": "cs.CL"
+            },
+            {
+              "doc_count": 811,
+              "key": "stat.ML"
+            },
+            {
+              "doc_count": 694,
+              "key": "cs.IR"
+            },
+            {
+              "doc_count": 598,
+              "key": "cs.CV"
+            },
+            {
+              "doc_count": 565,
+              "key": "cs.DS"
+            },
+            {
+              "doc_count": 540,
+              "key": "math.OC"
+            },
+            {
+              "doc_count": 510,
+              "key": "cs.DC"
+            },
+            {
+              "doc_count": 346,
+              "key": "cs.CR"
+            },
+            {
+              "doc_count": 182,
+              "key": "cs.SY"
+            },
+            {
+              "doc_count": 182,
+              "key": "eess.SY"
+            },
+            {
+              "doc_count": 173,
+              "key": "cs.RO"
+            },
+            {
+              "doc_count": 150,
+              "key": "cs.NE"
+            },
+            {
+              "doc_count": 139,
+              "key": "cs.NI"
+            },
+            {
+              "doc_count": 115,
+              "key": "cs.IT"
+            },
+            {
+              "doc_count": 115,
+              "key": "eess.SP"
+            },
+            {
+              "doc_count": 115,
+              "key": "math.IT"
+            },
+            {
+              "doc_count": 110,
+              "key": "cs.SE"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 2110
+        },
+        "by_year": {
+          "buckets": [
+            {
+              "doc_count": 57,
+              "key": 2007
+            },
+            {
+              "doc_count": 17,
+              "key": 2008
+            },
+            {
+              "doc_count": 36,
+              "key": 2009
+            },
+            {
+              "doc_count": 31,
+              "key": 2010
+            },
+            {
+              "doc_count": 46,
+              "key": 2011
+            },
+            {
+              "doc_count": 96,
+              "key": 2012
+            },
+            {
+              "doc_count": 76,
+              "key": 2013
+            },
+            {
+              "doc_count": 91,
+              "key": 2014
+            },
+            {
+              "doc_count": 123,
+              "key": 2015
+            },
+            {
+              "doc_count": 175,
+              "key": 2016
+            },
+            {
+              "doc_count": 172,
+              "key": 2017
+            },
+            {
+              "doc_count": 222,
+              "key": 2018
+            },
+            {
+              "doc_count": 333,
+              "key": 2019
+            },
+            {
+              "doc_count": 476,
+              "key": 2020
+            },
+            {
+              "doc_count": 563,
+              "key": 2021
+            },
+            {
+              "doc_count": 544,
+              "key": 2022
+            },
+            {
+              "doc_count": 668,
+              "key": 2023
+            },
+            {
+              "doc_count": 847,
+              "key": 2024
+            },
+            {
+              "doc_count": 1424,
+              "key": 2025
+            },
+            {
+              "doc_count": 1324,
+              "key": 2026
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.405846,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "aggregations": [
+          "year",
+          "categories"
+        ],
+        "dsl": {
+          "aggs": {
+            "by_category": {
+              "terms": {
+                "field": "categories",
+                "size": 20
+              }
+            },
+            "by_year": {
+              "terms": {
+                "field": "year",
+                "order": {
+                  "_key": "asc"
+                },
+                "size": 30
+              }
+            }
+          },
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title^2",
+                "abstract"
+              ],
+              "operator": "or",
+              "query": "query optimization",
+              "type": "best_fields"
+            }
+          },
+          "size": 0,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title",
+          "abstract"
+        ]
+      },
+      "execution_contract_sha256": "ead55bc650f7d8fb8e77d74d69b989fe1ccad7b3407bb0b9d1a59e85dfea225f",
+      "finished_at": "2026-08-08T07:50:19.024Z",
+      "finished_monotonic_seconds": 641943.063215791,
+      "intent": "Analyze query optimization results by year and scientific category.",
+      "logical_contract_sha256": "d77f4108416a93574830ef78e03df909efbed8261d6782957f8b6f74080f3149",
+      "maximum_latency_ms": 2.955084,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.042404,
+      "measurements": [
+        {
+          "client_latency_ms": 1.13575,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.955084,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.374959,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.376833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.158375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.557041,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.356959,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.175916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.077916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.09975,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.139959,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.283875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.408833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.199333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.087,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.140542,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.33625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.533334,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.247125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.165791,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.189292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.290417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.278875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.184709,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.545916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.163292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.07275,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.248042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.316875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.074584,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 7321,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.07275,
+      "p95_latency_ms": 2.247125,
+      "query_id": "aggregation_query_optimization",
+      "result_count": 7321,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:18.981Z",
+      "started_monotonic_seconds": 641943.020752333,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 707.479726,
+      "type": "aggregation",
+      "user_input": "query optimization",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.626628,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title^2",
+                "abstract"
+              ],
+              "operator": "or",
+              "query": "distributed database",
+              "type": "best_fields"
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title^2",
+          "abstract"
+        ],
+        "operator": "or"
+      },
+      "execution_contract_sha256": "7c5218730d8329b5b520bd4aa2e1ae4d822f34c2d767d3851f22a07b72fd26b9",
+      "finished_at": "2026-08-08T07:50:19.084Z",
+      "finished_monotonic_seconds": 641943.12324325,
+      "intent": "Find articles related to distributed databases.",
+      "logical_contract_sha256": "7919e4acca763c26bde84b9fa51fe832f311ef20ea22c14e5532fd896bb7a1ce",
+      "maximum_latency_ms": 3.092708,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.049129,
+      "measurements": [
+        {
+          "client_latency_ms": 1.250125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.3975,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.322833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.318834,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.189834,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.710708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.286959,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.731958,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.224333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.573208,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.209708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.298958,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.335084,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.389208,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.971375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.9875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.218625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.248166,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.304042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.518333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.232916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 3.092708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.59275,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.518459,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.944166,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.36025,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.498583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.369291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.308125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 5139,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.394292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 5139,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.218625,
+      "p95_latency_ms": 2.59275,
+      "query_id": "keyword_distributed_database",
+      "result_count": 5139,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.035Z",
+      "started_monotonic_seconds": 641943.074041416,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 610.637303,
+      "type": "keyword",
+      "user_input": "distributed database",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.658296,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title^2",
+                "abstract"
+              ],
+              "operator": "or",
+              "query": "query optimization",
+              "type": "best_fields"
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title^2",
+          "abstract"
+        ],
+        "operator": "or"
+      },
+      "execution_contract_sha256": "143641000a2c6ddee62d537ba478cd4b0780dd78cea9ba504ac8bb40d7ea5c72",
+      "finished_at": "2026-08-08T07:50:19.142Z",
+      "finished_monotonic_seconds": 641943.181252208,
+      "intent": "Find articles related to query optimization.",
+      "logical_contract_sha256": "4208793c556c3b5ed863bda404b5fea3ee297d5eaca46f3a03b4d6b823a3d3dc",
+      "maximum_latency_ms": 3.027167,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.050306,
+      "measurements": [
+        {
+          "client_latency_ms": 1.571417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.577,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.639291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.486917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.4125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.471625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.677,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.529,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.21725,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.862541,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.870041,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.31375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.835041,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.586917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.606875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.569584,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.423667,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 3.027167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.91875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.395,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.529667,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.648584,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.415333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.557916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.512125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.405833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.570042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.443292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.434458,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 7321,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.240291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 7321,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.240291,
+      "p95_latency_ms": 2.606875,
+      "query_id": "keyword_query_optimization",
+      "result_count": 7321,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.092Z",
+      "started_monotonic_seconds": 641943.130864833,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 596.353798,
+      "type": "keyword",
+      "user_input": "query optimization",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.874711,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "bool": {
+              "minimum_should_match": 1,
+              "should": [
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title",
+                      "abstract"
+                    ],
+                    "query": "query processing",
+                    "slop": 0,
+                    "type": "phrase"
+                  }
+                },
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title",
+                      "abstract"
+                    ],
+                    "query": "storage engine",
+                    "slop": 0,
+                    "type": "phrase"
+                  }
+                },
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title",
+                      "abstract"
+                    ],
+                    "query": "transaction processing",
+                    "slop": 0,
+                    "type": "phrase"
+                  }
+                }
+              ]
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title",
+          "abstract"
+        ],
+        "semantics": "any_consecutive_phrase",
+        "slop": 0
+      },
+      "execution_contract_sha256": "b178c4c8a3cfb11b784557b5b874c7656b29fd59a78693698319dcff3ae64537",
+      "finished_at": "2026-08-08T07:50:19.210Z",
+      "finished_monotonic_seconds": 641943.249143333,
+      "intent": "Find articles containing at least one of query processing, storage engine, or transaction processing as a consecutive phrase.",
+      "logical_contract_sha256": "66c783e15ad917a6f58c6008d513038e42fbb2a66e6722b4f0ed8cecbabc761c",
+      "maximum_latency_ms": 2.885542,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.056864,
+      "measurements": [
+        {
+          "client_latency_ms": 1.983,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.83275,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.852583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.805708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.945041,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.970042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.773125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.825875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.885542,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.954666,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.663583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.87075,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.814,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.8365,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.947167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.717583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.631625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.71525,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.735,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.677417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.698625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.803667,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.80275,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.683041,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.869,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.906875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.799875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.753625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.836541,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 992,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.650125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 992,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.631625,
+      "p95_latency_ms": 2.869,
+      "query_id": "contain_processing_phrases_any",
+      "result_count": 992,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.153Z",
+      "started_monotonic_seconds": 641943.192213375,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 527.578822,
+      "type": "contain",
+      "user_input": [
+        "query processing",
+        "storage engine",
+        "transaction processing"
+      ],
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.797599,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title",
+                "abstract"
+              ],
+              "query": "database systems",
+              "slop": 0,
+              "type": "phrase"
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title",
+          "abstract"
+        ],
+        "semantics": "consecutive_phrase",
+        "slop": 0
+      },
+      "execution_contract_sha256": "947e9bdb31a703f8d5e35ed9368027a6916662e6c5c044f3483cdc653639404c",
+      "finished_at": "2026-08-08T07:50:19.272Z",
+      "finished_monotonic_seconds": 641943.311428166,
+      "intent": "Find articles containing the consecutive phrase database systems in title or abstract.",
+      "logical_contract_sha256": "f3cee17c1635a264fab65f2422bb432945338919142007c9b55703ee4bfd76c9",
+      "maximum_latency_ms": 4.921916,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.054594,
+      "measurements": [
+        {
+          "client_latency_ms": 1.315666,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.320625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.343917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.437292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.196,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.264458,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.872791,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.313209,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.607042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.707291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.443792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.276167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 3.014417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.921916,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.277167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.598125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.356584,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.418292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.557958,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.520375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.227375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.445208,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.380166,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.582917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.881167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.728583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.659541,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.540625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.381042,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 554,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.33825,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 554,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.196,
+      "p95_latency_ms": 3.014417,
+      "query_id": "contain_database_systems_phrase",
+      "result_count": 554,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.217Z",
+      "started_monotonic_seconds": 641943.256781916,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 549.513452,
+      "type": "contain",
+      "user_input": "database systems",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.280443,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title",
+                      "abstract"
+                    ],
+                    "operator": "and",
+                    "query": "indexing"
+                  }
+                }
+              ],
+              "must_not": [
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title",
+                      "abstract"
+                    ],
+                    "operator": "or",
+                    "query": "blockchain"
+                  }
+                }
+              ]
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title",
+          "abstract"
+        ],
+        "semantics": "required_term_and_excluded_term"
+      },
+      "execution_contract_sha256": "877dd7d9e8b11c22c5d9d235f320774a2c594dd23f041dfea0595585acc597ac",
+      "finished_at": "2026-08-08T07:50:19.319Z",
+      "finished_monotonic_seconds": 641943.358794958,
+      "intent": "Find articles containing indexing but not blockchain.",
+      "logical_contract_sha256": "03ddf5840b9944396b3153e2da2b28f3f6e8c7e007039bbe70b9b351e28d0e6f",
+      "maximum_latency_ms": 2.80975,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.038861,
+      "measurements": [
+        {
+          "client_latency_ms": 1.185666,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.170084,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.312,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.45125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.332792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.221542,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.140333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.857625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.161417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.171792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.080791,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.522709,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.80975,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.282917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.176875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.211334,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.286417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.176833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.111625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.234125,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.153375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.135792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.190333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.237833,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.107333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.15925,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.270583,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.15875,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.058208,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 2830,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.043958,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 2830,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.043958,
+      "p95_latency_ms": 1.857625,
+      "query_id": "contain_indexing_not_blockchain",
+      "result_count": 2830,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.281Z",
+      "started_monotonic_seconds": 641943.319895208,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 771.978875,
+      "type": "contain",
+      "user_input": "indexing NOT blockchain",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 1.57265,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "bool": {
+              "filter": [
+                {
+                  "term": {
+                    "categories": "cs.DB"
+                  }
+                }
+              ],
+              "must": [
+                {
+                  "multi_match": {
+                    "fields": [
+                      "title^2",
+                      "abstract"
+                    ],
+                    "operator": "or",
+                    "query": "learned indexes",
+                    "type": "best_fields"
+                  }
+                }
+              ]
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title^2",
+          "abstract"
+        ],
+        "filter_context": {
+          "categories": "cs.DB"
+        },
+        "operator": "or"
+      },
+      "execution_contract_sha256": "0d92df17a45f7bf09e9cd4327b59e949039088217b98dd56258e77302bb7e31a",
+      "finished_at": "2026-08-08T07:50:19.377Z",
+      "finished_monotonic_seconds": 641943.415823208,
+      "intent": "Find articles related to learned indexes in category cs.DB.",
+      "logical_contract_sha256": "c7686fd9543fca171391a1466079c3f8d0f714c47b6bcc95998dcf193f2932f8",
+      "maximum_latency_ms": 3.167708,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.047489,
+      "measurements": [
+        {
+          "client_latency_ms": 2.23925,
+          "elasticsearch_took_ms": 0,
+          "request_number": 1,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.419417,
+          "elasticsearch_took_ms": 0,
+          "request_number": 2,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.519458,
+          "elasticsearch_took_ms": 0,
+          "request_number": 3,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.4355,
+          "elasticsearch_took_ms": 0,
+          "request_number": 4,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.200584,
+          "elasticsearch_took_ms": 0,
+          "request_number": 5,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.293917,
+          "elasticsearch_took_ms": 0,
+          "request_number": 6,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.350291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 7,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.543291,
+          "elasticsearch_took_ms": 0,
+          "request_number": 8,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.912375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 9,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.120708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 10,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.83025,
+          "elasticsearch_took_ms": 0,
+          "request_number": 11,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.115542,
+          "elasticsearch_took_ms": 0,
+          "request_number": 12,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.322375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 13,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.416792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 14,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.180333,
+          "elasticsearch_took_ms": 0,
+          "request_number": 15,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.269708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 16,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.531625,
+          "elasticsearch_took_ms": 0,
+          "request_number": 17,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.827792,
+          "elasticsearch_took_ms": 0,
+          "request_number": 18,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.600167,
+          "elasticsearch_took_ms": 0,
+          "request_number": 19,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.568208,
+          "elasticsearch_took_ms": 0,
+          "request_number": 20,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 3.167708,
+          "elasticsearch_took_ms": 0,
+          "request_number": 21,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.346084,
+          "elasticsearch_took_ms": 0,
+          "request_number": 22,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.553667,
+          "elasticsearch_took_ms": 0,
+          "request_number": 23,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.280375,
+          "elasticsearch_took_ms": 0,
+          "request_number": 24,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.243292,
+          "elasticsearch_took_ms": 0,
+          "request_number": 25,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.145959,
+          "elasticsearch_took_ms": 0,
+          "request_number": 26,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.064542,
+          "elasticsearch_took_ms": 0,
+          "request_number": 27,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.236458,
+          "elasticsearch_took_ms": 0,
+          "request_number": 28,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 2.292667,
+          "elasticsearch_took_ms": 0,
+          "request_number": 29,
+          "result_count": 371,
+          "success": true
+        },
+        {
+          "client_latency_ms": 1.151166,
+          "elasticsearch_took_ms": 0,
+          "request_number": 30,
+          "result_count": 371,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 1.064542,
+      "p95_latency_ms": 2.419417,
+      "query_id": "keyword_learned_indexes_cs_db",
+      "result_count": 371,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.329Z",
+      "started_monotonic_seconds": 641943.368296625,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 631.729125,
+      "type": "keyword",
+      "user_input": "learned indexes",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    },
+    {
+      "average_failed_latency_ms": null,
+      "average_latency_ms": 5.130282,
+      "error_count": 0,
+      "error_rate": 0.0,
+      "execution_contract": {
+        "dsl": {
+          "query": {
+            "multi_match": {
+              "fields": [
+                "title^2",
+                "abstract"
+              ],
+              "fuzziness": "AUTO",
+              "operator": "and",
+              "prefix_length": 1,
+              "query": "transacton procesing"
+            }
+          },
+          "size": 10,
+          "track_total_hits": true
+        },
+        "fields": [
+          "title^2",
+          "abstract"
+        ],
+        "fuzziness": "AUTO",
+        "operator": "and",
+        "prefix_length": 1
+      },
+      "execution_contract_sha256": "568270762db0835e357cf64678941cbe008e71e7d31ae45b4d484392e5125103",
+      "finished_at": "2026-08-08T07:50:19.558Z",
+      "finished_monotonic_seconds": 641943.597316666,
+      "intent": "Find transaction processing articles despite typographical errors.",
+      "logical_contract_sha256": "58d99c9703ea81a254fea425e2225f9a13c5db368dc9cae5036126fa565c8a78",
+      "maximum_latency_ms": 7.14225,
+      "measured_request_count": 30,
+      "measurement_duration_seconds": 0.154709,
+      "measurements": [
+        {
+          "client_latency_ms": 5.196625,
+          "elasticsearch_took_ms": 3,
+          "request_number": 1,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 6.498541,
+          "elasticsearch_took_ms": 4,
+          "request_number": 2,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.987084,
+          "elasticsearch_took_ms": 3,
+          "request_number": 3,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.130125,
+          "elasticsearch_took_ms": 3,
+          "request_number": 4,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.135458,
+          "elasticsearch_took_ms": 3,
+          "request_number": 5,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.83775,
+          "elasticsearch_took_ms": 3,
+          "request_number": 6,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.067708,
+          "elasticsearch_took_ms": 3,
+          "request_number": 7,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.707042,
+          "elasticsearch_took_ms": 3,
+          "request_number": 8,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.841666,
+          "elasticsearch_took_ms": 3,
+          "request_number": 9,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.887708,
+          "elasticsearch_took_ms": 3,
+          "request_number": 10,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.490291,
+          "elasticsearch_took_ms": 3,
+          "request_number": 11,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.506666,
+          "elasticsearch_took_ms": 3,
+          "request_number": 12,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.833417,
+          "elasticsearch_took_ms": 3,
+          "request_number": 13,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.679792,
+          "elasticsearch_took_ms": 3,
+          "request_number": 14,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.974084,
+          "elasticsearch_took_ms": 3,
+          "request_number": 15,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.71425,
+          "elasticsearch_took_ms": 3,
+          "request_number": 16,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.267625,
+          "elasticsearch_took_ms": 3,
+          "request_number": 17,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.685125,
+          "elasticsearch_took_ms": 3,
+          "request_number": 18,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.675542,
+          "elasticsearch_took_ms": 3,
+          "request_number": 19,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.681917,
+          "elasticsearch_took_ms": 3,
+          "request_number": 20,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.064875,
+          "elasticsearch_took_ms": 3,
+          "request_number": 21,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.1615,
+          "elasticsearch_took_ms": 3,
+          "request_number": 22,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.969833,
+          "elasticsearch_took_ms": 3,
+          "request_number": 23,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 6.350959,
+          "elasticsearch_took_ms": 4,
+          "request_number": 24,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.927709,
+          "elasticsearch_took_ms": 3,
+          "request_number": 25,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 7.14225,
+          "elasticsearch_took_ms": 6,
+          "request_number": 26,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.42875,
+          "elasticsearch_took_ms": 3,
+          "request_number": 27,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.104209,
+          "elasticsearch_took_ms": 3,
+          "request_number": 28,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 5.133625,
+          "elasticsearch_took_ms": 3,
+          "request_number": 29,
+          "result_count": 479,
+          "success": true
+        },
+        {
+          "client_latency_ms": 4.826333,
+          "elasticsearch_took_ms": 3,
+          "request_number": 30,
+          "result_count": 479,
+          "success": true
+        }
+      ],
+      "minimum_latency_ms": 4.490291,
+      "p95_latency_ms": 6.498541,
+      "query_id": "fuzzy_transacton_procesing",
+      "result_count": 479,
+      "result_count_consistent": true,
+      "started_at": "2026-08-08T07:50:19.403Z",
+      "started_monotonic_seconds": 641943.44253425,
+      "successful_request_count": 30,
+      "system_metrics": {
+        "docker_cpu_percent": {
+          "average": 26.37,
+          "maximum": 26.37,
+          "sample_count": 1
+        },
+        "docker_memory_percent": {
+          "average": 77.44,
+          "maximum": 77.44,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_bytes": {
+          "average": 343225784.0,
+          "maximum": 343225784.0,
+          "sample_count": 1
+        },
+        "elasticsearch_jvm_heap_used_percent": {
+          "average": 31.0,
+          "maximum": 31.0,
+          "sample_count": 1
+        },
+        "elasticsearch_process_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "host_os_cpu_percent": {
+          "average": 2.0,
+          "maximum": 2.0,
+          "sample_count": 1
+        },
+        "resource_sample_count": 1,
+        "sampling_errors": []
+      },
+      "throughput_requests_per_second": 193.912338,
+      "type": "fuzzy",
+      "user_input": "transacton procesing",
+      "warmup_error_count": 0,
+      "warmup_errors": [],
+      "warmup_request_count": 5
+    }
+  ],
+  "started_at": "2026-08-08T07:50:18.645Z",
+  "status": "passed",
+  "system_metrics": {
+    "docker_cpu_percent": {
+      "average": 26.37,
+      "maximum": 26.37,
+      "sample_count": 1
+    },
+    "docker_memory_percent": {
+      "average": 77.44,
+      "maximum": 77.44,
+      "sample_count": 1
+    },
+    "elasticsearch_jvm_heap_used_bytes": {
+      "average": 343225784.0,
+      "maximum": 343225784.0,
+      "sample_count": 1
+    },
+    "elasticsearch_jvm_heap_used_percent": {
+      "average": 31.0,
+      "maximum": 31.0,
+      "sample_count": 1
+    },
+    "elasticsearch_process_cpu_percent": {
+      "average": 2.0,
+      "maximum": 2.0,
+      "sample_count": 1
+    },
+    "host_os_cpu_percent": {
+      "average": 2.0,
+      "maximum": 2.0,
+      "sample_count": 1
+    },
+    "resource_sample_count": 1,
+    "sampling_errors": []
+  },
+  "totals": {
+    "error_count": 0,
+    "error_rate": 0.0,
+    "measured_request_count": 270,
+    "query_scenario_count": 9,
+    "successful_request_count": 270,
+    "warmup_error_count": 0,
+    "warmup_request_count": 45
+  }
+}

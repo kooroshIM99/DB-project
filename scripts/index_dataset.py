@@ -82,10 +82,12 @@ def batched(
         yield batch
 
 
-def make_bulk_body(batch: list[tuple[int, dict[str, Any]]]) -> bytes:
+def make_bulk_body(
+    batch: list[tuple[int, dict[str, Any]]], index: str = BASELINE_INDEX
+) -> bytes:
     lines: list[str] = []
     for _, document in batch:
-        action = {"index": {"_index": BASELINE_INDEX, "_id": document["paper_id"]}}
+        action = {"index": {"_index": index, "_id": document["paper_id"]}}
         lines.append(json.dumps(action, ensure_ascii=False, separators=(",", ":")))
         lines.append(json.dumps(document, ensure_ascii=False, separators=(",", ":")))
     return ("\n".join(lines) + "\n").encode("utf-8")
@@ -123,19 +125,24 @@ def request_json(
     return result
 
 
-def require_existing_baseline(base_url: str, timeout: float) -> None:
-    request = urllib.request.Request(f"{base_url.rstrip('/')}/{BASELINE_INDEX}", method="HEAD")
+def require_existing_index(base_url: str, index: str, timeout: float) -> None:
+    request = urllib.request.Request(f"{base_url.rstrip('/')}/{index}", method="HEAD")
     try:
         with urllib.request.urlopen(request, timeout=timeout):
             return
     except urllib.error.HTTPError as exc:
         if exc.code == 404:
             raise IngestionError(
-                f"required index {BASELINE_INDEX!r} does not exist; run scripts/create_index.py first"
+                f"required index {index!r} does not exist; run scripts/create_index.py first"
             ) from exc
-        raise IngestionError(f"HEAD /{BASELINE_INDEX} failed with HTTP {exc.code}") from exc
+        raise IngestionError(f"HEAD /{index} failed with HTTP {exc.code}") from exc
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
-        raise IngestionError(f"HEAD /{BASELINE_INDEX} failed: {exc}") from exc
+        raise IngestionError(f"HEAD /{index} failed: {exc}") from exc
+
+
+def require_existing_baseline(base_url: str, timeout: float) -> None:
+    """Backward-compatible stage-4 safety helper."""
+    require_existing_index(base_url, BASELINE_INDEX, timeout)
 
 
 def inspect_bulk_response(
@@ -172,13 +179,15 @@ def inspect_bulk_response(
     return succeeded, created, updated, errors
 
 
-def index_stats(base_url: str, timeout: float) -> dict[str, int]:
-    count = request_json(base_url, "GET", f"/{BASELINE_INDEX}/_count", timeout=timeout)
+def index_stats(
+    base_url: str, timeout: float, index: str = BASELINE_INDEX
+) -> dict[str, int]:
+    count = request_json(base_url, "GET", f"/{index}/_count", timeout=timeout)
     stats = request_json(
-        base_url, "GET", f"/{BASELINE_INDEX}/_stats/store,docs", timeout=timeout
+        base_url, "GET", f"/{index}/_stats/store,docs", timeout=timeout
     )
     try:
-        index_data = stats["indices"][BASELINE_INDEX]
+        index_data = stats["indices"][index]
         return {
             "document_count": int(count["count"]),
             "store_size_bytes": int(index_data["total"]["store"]["size_in_bytes"]),
@@ -208,6 +217,8 @@ def ingest(
     batch_size: int,
     expected_count: int,
     timeout: float,
+    index: str = BASELINE_INDEX,
+    benchmark_type: str = "baseline_ingestion",
 ) -> dict[str, Any]:
     if batch_size <= 0:
         raise IngestionError("batch size must be positive")
@@ -217,7 +228,7 @@ def ingest(
         raise IngestionError(f"dataset file not found: {dataset}")
 
     dataset_hash = sha256_file(dataset)
-    require_existing_baseline(base_url, timeout)
+    require_existing_index(base_url, index, timeout)
     started_at = utc_now()
     timer = time.perf_counter()
     processed = succeeded = created = updated = error_count = batch_count = 0
@@ -229,7 +240,7 @@ def ingest(
                 base_url,
                 "POST",
                 "/_bulk",
-                body=make_bulk_body(batch),
+                body=make_bulk_body(batch, index),
                 content_type="application/x-ndjson",
                 timeout=timeout,
             )
@@ -246,8 +257,8 @@ def ingest(
             if remaining > 0:
                 recorded_errors.extend(batch_errors[:remaining])
 
-        request_json(base_url, "POST", f"/{BASELINE_INDEX}/_refresh", timeout=timeout)
-        stats = index_stats(base_url, timeout)
+        request_json(base_url, "POST", f"/{index}/_refresh", timeout=timeout)
+        stats = index_stats(base_url, timeout, index)
         duration = time.perf_counter() - timer
         passed = (
             processed == expected_count
@@ -257,9 +268,9 @@ def ingest(
         )
         report: dict[str, Any] = {
             "status": "passed" if passed else "failed",
-            "benchmark_type": "baseline_ingestion",
+            "benchmark_type": benchmark_type,
             "is_search_benchmark": False,
-            "index": BASELINE_INDEX,
+            "index": index,
             "host": base_url,
             "dataset": str(dataset),
             "dataset_sha256": dataset_hash,
@@ -290,9 +301,9 @@ def ingest(
         duration = time.perf_counter() - timer
         report = {
             "status": "failed",
-            "benchmark_type": "baseline_ingestion",
+            "benchmark_type": benchmark_type,
             "is_search_benchmark": False,
-            "index": BASELINE_INDEX,
+            "index": index,
             "host": base_url,
             "dataset": str(dataset),
             "dataset_sha256": dataset_hash,

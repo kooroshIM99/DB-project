@@ -121,7 +121,8 @@ def load_contract(path: Path) -> dict[str, Any]:
 def load_query_pools(
     contract: dict[str, Any], base_path: Path, hybrid_path: Path
 ) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
-    base_contract = search_queries.load_query_contract(base_path)
+    base_execution = contract.get("defaults", {}).get("base_execution", "baseline")
+    base_contract = search_queries.load_query_contract(base_path, base_execution)
     hybrid_contract = hybrid_search.load_contract(hybrid_path)
     base_by_id = {query["id"]: query for query in base_contract["queries"]}
     hybrid_by_id = {query["id"]: query for query in hybrid_contract["queries"]}
@@ -209,10 +210,12 @@ class LoadClient:
         search_type: str,
         timeout: float,
         hybrid_contract: dict[str, Any],
+        base_execution: str = "baseline",
     ) -> None:
         self.index = index
         self.search_type = search_type
         self.hybrid_contract = hybrid_contract
+        self.base_execution = base_execution
         self.sessions: dict[str, PersistentElasticsearchSession] = {}
         self.executor: ThreadPoolExecutor | None = None
         if search_type == "hybrid":
@@ -237,7 +240,7 @@ class LoadClient:
     def execute(self, query: dict[str, Any]) -> dict[str, Any]:
         if self.search_type != "hybrid":
             response = self.sessions[self.search_type].search(
-                self.index, query["execution"]["baseline"]["dsl"]
+                self.index, query["execution"][self.base_execution]["dsl"]
             )
             try:
                 total = search_queries.total_hits(response)
@@ -310,6 +313,7 @@ def run_scenario(
     minimum_requests: int,
     timeout: float,
     resource_interval: float,
+    base_execution: str = "baseline",
 ) -> dict[str, Any]:
     client_count = scenario["client_count"]
     scenario_id = scenario["id"]
@@ -336,6 +340,7 @@ def run_scenario(
             search_type=search_type,
             timeout=timeout,
             hybrid_contract=hybrid_contract,
+            base_execution=base_execution,
         )
         warmup_rng = random.Random(stable_seed(base_seed, scenario_id, client_id, "warmup"))
         measured_seed = stable_seed(base_seed, scenario_id, client_id, "measurement")
@@ -799,6 +804,7 @@ def run_load_tests(
                 minimum_requests=minimum_requests,
                 timeout=defaults["request_timeout_seconds"],
                 resource_interval=defaults["resource_sample_interval_seconds"],
+                base_execution=defaults.get("base_execution", "baseline"),
             )
         )
         current = scenarios[-1]
@@ -833,6 +839,7 @@ def run_load_tests(
                     minimum_requests=minimum_requests,
                     timeout=defaults["request_timeout_seconds"],
                     resource_interval=defaults["resource_sample_interval_seconds"],
+                    base_execution=defaults.get("base_execution", "baseline"),
                 )
             )
             optional_executed.append(optional["id"])

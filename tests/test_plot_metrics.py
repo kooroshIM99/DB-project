@@ -168,6 +168,9 @@ def test_defaults_include_stage5_and_stage6_artifacts() -> None:
         Path("results/search_baseline.json"),
         Path("results/hybrid_comparison.json"),
         Path("results/load_test_baseline.json"),
+        Path("results/search_optimized.json"),
+        Path("results/hybrid_comparison_optimized.json"),
+        Path("results/load_test_optimized.json"),
     ]
     assert args.json_output == Path("results/metrics_summary.json")
     assert args.dashboard == Path("results/metrics_dashboard.png")

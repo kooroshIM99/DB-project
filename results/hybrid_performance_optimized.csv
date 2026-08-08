@@ -1,0 +1,13 @@
+query_id,user_input,method,result_count,result_count_semantics,average_latency_ms,p95_latency_ms,user_facing_throughput_per_second,internal_elasticsearch_request_throughput_per_second,successful_request_count,error_count,error_rate,fuzzy_executed,fuzzy_trigger_reasons
+databse_optimiztion,databse optimiztion,contain,0,exact Elasticsearch total hits,0.900628,1.780167,1097.137845,1097.137845,30,0,0.0,False,
+databse_optimiztion,databse optimiztion,fuzzy,828,exact Elasticsearch total hits,6.371421,7.363458,154.992302,154.992302,30,0,0.0,True,
+databse_optimiztion,databse optimiztion,hybrid,101,exact unique candidates within configured retrieval windows,9.723537,14.375333,102.444992,307.334976,30,0,0.0,True,unique_candidates_below_20|no_shared_document_in_both_top_10_lists|mandatory_typo_scenario
+databse_optimiztion,databse optimiztion,keyword,1,exact Elasticsearch total hits,1.00774,2.058583,984.55208,984.55208,30,0,0.0,False,
+learned_indexes,learned indexes,contain,75,exact Elasticsearch total hits,2.985043,4.770459,329.81485,329.81485,30,0,0.0,False,
+learned_indexes,learned indexes,fuzzy,319,exact Elasticsearch total hits,6.073142,7.499084,162.319364,162.319364,30,0,0.0,True,
+learned_indexes,learned indexes,hybrid,124,exact unique candidates within configured retrieval windows,4.566831,6.530583,217.437786,434.875571,30,0,0.0,False,
+learned_indexes,learned indexes,keyword,2529,exact Elasticsearch total hits,3.044201,3.930542,323.039733,323.039733,30,0,0.0,False,
+query_optimization,query optimization,contain,308,exact Elasticsearch total hits,3.202749,4.757167,304.16028,304.16028,30,0,0.0,False,
+query_optimization,query optimization,fuzzy,647,exact Elasticsearch total hits,5.754033,6.904583,170.945,170.945,30,0,0.0,True,
+query_optimization,query optimization,hybrid,125,exact unique candidates within configured retrieval windows,5.065649,6.3545,195.995112,391.990223,30,0,0.0,False,
+query_optimization,query optimization,keyword,7321,exact Elasticsearch total hits,3.366254,4.280875,289.11053,289.11053,30,0,0.0,False,

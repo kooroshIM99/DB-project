@@ -7,6 +7,7 @@ import pytest
 
 
 MAPPING_PATH = Path("elasticsearch/mappings/arxiv_papers_baseline.json")
+OPTIMIZED_MAPPING_PATH = Path("elasticsearch/mappings/arxiv_papers_optimized.json")
 EXPECTED_FIELDS = {
     "paper_id": {"type": "keyword"},
     "title": {"type": "text", "analyzer": "standard"},
@@ -71,3 +72,16 @@ def test_create_index_defaults_are_safe() -> None:
     assert args.index == "arxiv_papers_baseline"
     assert args.mapping == MAPPING_PATH
     assert args.recreate is False
+
+
+def test_stage9_mapping_is_separate_strict_and_optimized() -> None:
+    from scripts import create_index
+
+    optimized = json.loads(OPTIMIZED_MAPPING_PATH.read_text(encoding="utf-8"))
+    create_index.validate_mapping_file(optimized)
+    assert optimized["mappings"]["_meta"]["index"] == "arxiv_papers_optimized"
+    assert optimized["mappings"]["dynamic"] == "strict"
+    assert set(optimized["mappings"]["properties"]) == set(EXPECTED_FIELDS)
+    substring = optimized["mappings"]["properties"]["title_abstract"]["fields"]["substring"]
+    assert substring["analyzer"] == "substring_index"
+    assert optimized["settings"]["index"]["number_of_replicas"] == 0

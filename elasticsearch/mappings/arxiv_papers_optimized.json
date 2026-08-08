@@ -1,0 +1,71 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "max_ngram_diff": 17
+    },
+    "analysis": {
+      "filter": {
+        "substring_ngrams": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 20
+        }
+      },
+      "analyzer": {
+        "substring_index": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "substring_ngrams"]
+        },
+        "substring_search": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "_meta": {
+      "description": "Stage-9 optimized mapping; baseline fields remain available while only demonstrated multi-fields are added.",
+      "dataset": "dataset/arxiv_project_sample_50k_cleaned.jsonl",
+      "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+      "stage": "9",
+      "index": "arxiv_papers_optimized"
+    },
+    "properties": {
+      "paper_id": {"type": "keyword"},
+      "title": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {"english": {"type": "text", "analyzer": "english"}}
+      },
+      "abstract": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {"english": {"type": "text", "analyzer": "english"}}
+      },
+      "title_abstract": {
+        "type": "text",
+        "analyzer": "standard",
+        "norms": false,
+        "fields": {
+          "substring": {
+            "type": "text",
+            "analyzer": "substring_index",
+            "search_analyzer": "substring_search",
+            "norms": false
+          }
+        }
+      },
+      "authors": {"type": "text", "analyzer": "standard", "norms": false},
+      "categories": {"type": "keyword"},
+      "primary_category": {"type": "keyword"},
+      "year": {"type": "integer"},
+      "update_date": {"type": "date", "format": "yyyy-MM-dd"}
+    }
+  }
+}

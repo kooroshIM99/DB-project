@@ -264,6 +264,83 @@ pressure appeared by ten clients for every base search type, so the optional
 now validates the compressed raw requests and includes all ten load scenarios in
 the normalized stage-7 tables and dashboard.
 
+## Stage 9 Optimized Index and Before/After Results
+
+The optimized index is completely separate from the baseline. It keeps the
+fixed one-shard/zero-replica layout and the nine-field source contract, adds an
+n-gram substring multi-field, and disables unnecessary norms on combined and
+author text.
+
+Create and ingest it with the same dataset and batch=500 protocol:
+
+```bash
+python scripts/create_index.py \
+  --index arxiv_papers_optimized \
+  --mapping elasticsearch/mappings/arxiv_papers_optimized.json
+python scripts/index_optimized.py
+```
+
+Run the isolated ablations and complete optimized replay:
+
+```bash
+python scripts/run_stage9_ablations.py
+python scripts/benchmark.py \
+  --queries queries/search_queries_optimized.json \
+  --mapping elasticsearch/mappings/arxiv_papers_optimized.json \
+  --ingestion-report results/ingestion_optimized.json \
+  --execution optimized --index arxiv_papers_optimized \
+  --json-report results/search_optimized.json \
+  --csv-report results/search_optimized.csv \
+  --chart results/search_optimized_latency.png
+python scripts/hybrid_search.py \
+  --index arxiv_papers_optimized \
+  --contract queries/hybrid_comparison_queries_optimized.json \
+  --mapping elasticsearch/mappings/arxiv_papers_optimized.json \
+  --ingestion-report results/ingestion_optimized.json \
+  --json-report results/hybrid_comparison_optimized.json \
+  --performance-csv results/hybrid_performance_optimized.csv \
+  --judgment-template results/relevance_judgments_optimized_template.csv
+python scripts/reuse_relevance_judgments.py
+python scripts/evaluate_relevance.py \
+  --comparison results/hybrid_comparison_optimized.json \
+  --judgments results/relevance_judgments_optimized.csv \
+  --quality-csv results/hybrid_quality_optimized.csv \
+  --quality-json results/hybrid_quality_optimized.json
+python scripts/run_load_tests.py \
+  --contract queries/load_test_scenarios_optimized.json \
+  --base-queries queries/search_queries_optimized.json \
+  --hybrid-queries queries/hybrid_comparison_queries_optimized.json \
+  --mapping elasticsearch/mappings/arxiv_papers_optimized.json \
+  --ingestion-report results/ingestion_optimized.json \
+  --json-report results/load_test_optimized.json \
+  --measurements results/load_test_optimized_measurements.jsonl.gz \
+  --csv-report results/load_test_optimized.csv \
+  --latency-chart results/load_test_optimized_latency.png \
+  --throughput-chart results/load_test_optimized_throughput.png
+python scripts/compare_stage9.py
+python scripts/plot_metrics.py
+```
+
+Verified decisions and trade-offs:
+
+- Removing the duplicated `title_abstract` clause preserved the tested logical
+  hit count and reduced average latency by 35.946% in its controlled ablation.
+- N-gram substring preserved counts for all three fixed inputs and reduced
+  average latency by 72.282% to 74.974% versus wildcard.
+- The English analyzer candidate was 19.374% slower and changed recall, so the
+  final primary/hybrid query execution does not use it.
+- Batch=1000 was only 1.316% faster than batch=500, and disabling refresh was
+  slower; the main comparison remains batch=500 with default refresh.
+- N-grams cost storage and ingestion time: about 294MB versus 103MB baseline,
+  and about 20.5s ingestion versus 7.7s baseline.
+- Precision@10 is unchanged for every stage-6 method/query pair. All nine
+  stage-5, twelve stage-6, and ten stage-8 scenarios completed with zero errors.
+- The optimized load run recorded 984,503 searches and clear pressure by ten
+  clients, so optional 20/50/100-client scenarios were not required.
+
+The stage-9 comparison JSON/CSV, analysis, and before/after charts are under
+`results/`. Stage 7 now validates all six baseline/optimized inputs by default.
+
 ### Verified Stage 4 Result
 
 - Status: passed

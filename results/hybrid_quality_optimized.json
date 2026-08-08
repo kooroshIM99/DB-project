@@ -1,0 +1,161 @@
+{
+  "comparison_path": "results/hybrid_comparison_optimized.json",
+  "comparison_sha256": "e90a2429a3bb0631796eb7f4538eba3bfb13d468e96a29d4a23c58dc7c3be1fe",
+  "empty_ranks_penalized": true,
+  "evaluation_type": "manual_binary_relevance_stage6",
+  "judgment_count": 101,
+  "judgments_path": "results/relevance_judgments_optimized.csv",
+  "judgments_sha256": "5d8c747343ec09d8b6418384804b667be7c3ed93571f808fbcb3181f5b410f05",
+  "precision_at_10_denominator": 10,
+  "quality": [
+    {
+      "judged_count": 0,
+      "method": "contain",
+      "missing_ranks": 10,
+      "precision_at_10": 0.0,
+      "precision_at_returned": null,
+      "query": "databse optimiztion",
+      "query_id": "databse_optimiztion",
+      "relevant_count": 0,
+      "returned_count": 0,
+      "total_result_count": 0
+    },
+    {
+      "judged_count": 10,
+      "method": "fuzzy",
+      "missing_ranks": 0,
+      "precision_at_10": 0.9,
+      "precision_at_returned": 0.9,
+      "query": "databse optimiztion",
+      "query_id": "databse_optimiztion",
+      "relevant_count": 9,
+      "returned_count": 10,
+      "total_result_count": 828
+    },
+    {
+      "judged_count": 10,
+      "method": "hybrid",
+      "missing_ranks": 0,
+      "precision_at_10": 0.8,
+      "precision_at_returned": 0.8,
+      "query": "databse optimiztion",
+      "query_id": "databse_optimiztion",
+      "relevant_count": 8,
+      "returned_count": 10,
+      "total_result_count": 101
+    },
+    {
+      "judged_count": 1,
+      "method": "keyword",
+      "missing_ranks": 9,
+      "precision_at_10": 0.0,
+      "precision_at_returned": 0.0,
+      "query": "databse optimiztion",
+      "query_id": "databse_optimiztion",
+      "relevant_count": 0,
+      "returned_count": 1,
+      "total_result_count": 1
+    },
+    {
+      "judged_count": 10,
+      "method": "contain",
+      "missing_ranks": 0,
+      "precision_at_10": 1.0,
+      "precision_at_returned": 1.0,
+      "query": "learned indexes",
+      "query_id": "learned_indexes",
+      "relevant_count": 10,
+      "returned_count": 10,
+      "total_result_count": 75
+    },
+    {
+      "judged_count": 10,
+      "method": "fuzzy",
+      "missing_ranks": 0,
+      "precision_at_10": 1.0,
+      "precision_at_returned": 1.0,
+      "query": "learned indexes",
+      "query_id": "learned_indexes",
+      "relevant_count": 10,
+      "returned_count": 10,
+      "total_result_count": 319
+    },
+    {
+      "judged_count": 10,
+      "method": "hybrid",
+      "missing_ranks": 0,
+      "precision_at_10": 1.0,
+      "precision_at_returned": 1.0,
+      "query": "learned indexes",
+      "query_id": "learned_indexes",
+      "relevant_count": 10,
+      "returned_count": 10,
+      "total_result_count": 124
+    },
+    {
+      "judged_count": 10,
+      "method": "keyword",
+      "missing_ranks": 0,
+      "precision_at_10": 1.0,
+      "precision_at_returned": 1.0,
+      "query": "learned indexes",
+      "query_id": "learned_indexes",
+      "relevant_count": 10,
+      "returned_count": 10,
+      "total_result_count": 2529
+    },
+    {
+      "judged_count": 10,
+      "method": "contain",
+      "missing_ranks": 0,
+      "precision_at_10": 0.9,
+      "precision_at_returned": 0.9,
+      "query": "query optimization",
+      "query_id": "query_optimization",
+      "relevant_count": 9,
+      "returned_count": 10,
+      "total_result_count": 308
+    },
+    {
+      "judged_count": 10,
+      "method": "fuzzy",
+      "missing_ranks": 0,
+      "precision_at_10": 0.9,
+      "precision_at_returned": 0.9,
+      "query": "query optimization",
+      "query_id": "query_optimization",
+      "relevant_count": 9,
+      "returned_count": 10,
+      "total_result_count": 647
+    },
+    {
+      "judged_count": 10,
+      "method": "hybrid",
+      "missing_ranks": 0,
+      "precision_at_10": 0.9,
+      "precision_at_returned": 0.9,
+      "query": "query optimization",
+      "query_id": "query_optimization",
+      "relevant_count": 9,
+      "returned_count": 10,
+      "total_result_count": 125
+    },
+    {
+      "judged_count": 10,
+      "method": "keyword",
+      "missing_ranks": 0,
+      "precision_at_10": 0.9,
+      "precision_at_returned": 0.9,
+      "query": "query optimization",
+      "query_id": "query_optimization",
+      "relevant_count": 9,
+      "returned_count": 10,
+      "total_result_count": 7321
+    }
+  ],
+  "relevance_values": [
+    "not_relevant",
+    "relevant"
+  ],
+  "status": "passed"
+}

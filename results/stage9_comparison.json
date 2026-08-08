@@ -1,0 +1,956 @@
+{
+  "ablations": {
+    "benchmark_type": "stage9_single_variable_ablations",
+    "finished_at": "2026-08-08T07:49:28.901Z",
+    "ingestion_ablations": [
+      {
+        "batch_size": 250,
+        "bulk_error_count": 0,
+        "document_count": 50000,
+        "documents_per_second": 7828.578,
+        "duration_seconds": 6.386856,
+        "isolated_variable": "batch_size",
+        "name": "batch_250",
+        "refresh_interval_during_ingestion": "1s (default)"
+      },
+      {
+        "batch_size": 500,
+        "bulk_error_count": 0,
+        "document_count": 50000,
+        "documents_per_second": 8319.466,
+        "duration_seconds": 6.010001,
+        "isolated_variable": "batch_size",
+        "name": "batch_500_control",
+        "refresh_interval_during_ingestion": "1s (default)"
+      },
+      {
+        "batch_size": 1000,
+        "bulk_error_count": 0,
+        "document_count": 50000,
+        "documents_per_second": 8428.97,
+        "duration_seconds": 5.931923,
+        "isolated_variable": "batch_size",
+        "name": "batch_1000",
+        "refresh_interval_during_ingestion": "1s (default)"
+      },
+      {
+        "batch_size": 500,
+        "bulk_error_count": 0,
+        "document_count": 50000,
+        "documents_per_second": 7241.451,
+        "duration_seconds": 6.904693,
+        "isolated_variable": "refresh_interval",
+        "name": "refresh_disabled",
+        "refresh_interval_during_ingestion": "-1"
+      }
+    ],
+    "protocol": {
+      "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+      "iterations": 30,
+      "warmups": 5
+    },
+    "search_ablations": [
+      {
+        "average_latency_change_percent": -35.946,
+        "control": {
+          "average_latency_ms": 2.575183,
+          "iterations": 30,
+          "p95_latency_ms": 4.165125,
+          "result_count": 7321,
+          "result_count_consistent": true,
+          "throughput_per_second": 388.322,
+          "warmups": 5
+        },
+        "control_execution": "title^2 + abstract + duplicated title_abstract",
+        "isolated_variable": "queried fields only; index, analyzer, input, filters, and protocol fixed",
+        "name": "query_structure_remove_duplicate_title_abstract",
+        "result_counts_equal": true,
+        "treatment": {
+          "average_latency_ms": 1.649515,
+          "iterations": 30,
+          "p95_latency_ms": 2.958167,
+          "result_count": 7321,
+          "result_count_consistent": true,
+          "throughput_per_second": 606.239,
+          "warmups": 5
+        },
+        "treatment_execution": "title^2 + abstract"
+      },
+      {
+        "average_latency_change_percent": 19.374,
+        "control": {
+          "average_latency_ms": 1.586354,
+          "iterations": 30,
+          "p95_latency_ms": 2.757125,
+          "result_count": 7321,
+          "result_count_consistent": true,
+          "throughput_per_second": 630.376,
+          "warmups": 5
+        },
+        "control_execution": "title^2 + abstract (standard)",
+        "isolated_variable": "standard versus English analyzer multi-fields on the same documents/index",
+        "name": "english_analyzer",
+        "result_counts_equal": false,
+        "treatment": {
+          "average_latency_ms": 1.893687,
+          "iterations": 30,
+          "p95_latency_ms": 3.30425,
+          "result_count": 13222,
+          "result_count_consistent": true,
+          "throughput_per_second": 528.07,
+          "warmups": 5
+        },
+        "treatment_execution": "title.english^2 + abstract.english"
+      },
+      {
+        "average_latency_change_percent": -74.974,
+        "control": {
+          "average_latency_ms": 6.775763,
+          "iterations": 30,
+          "p95_latency_ms": 7.901333,
+          "result_count": 2374,
+          "result_count_consistent": true,
+          "throughput_per_second": 147.585,
+          "warmups": 5
+        },
+        "control_execution": "wildcard *input*",
+        "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+        "name": "substring_wildcard_vs_ngram_transact",
+        "result_counts_equal": true,
+        "treatment": {
+          "average_latency_ms": 1.695686,
+          "iterations": 30,
+          "p95_latency_ms": 2.722208,
+          "result_count": 2374,
+          "result_count_consistent": true,
+          "throughput_per_second": 589.732,
+          "warmups": 5
+        },
+        "treatment_execution": "match on title_abstract.substring"
+      },
+      {
+        "average_latency_change_percent": -74.136,
+        "control": {
+          "average_latency_ms": 6.959271,
+          "iterations": 30,
+          "p95_latency_ms": 8.2065,
+          "result_count": 7314,
+          "result_count_consistent": true,
+          "throughput_per_second": 143.693,
+          "warmups": 5
+        },
+        "control_execution": "wildcard *input*",
+        "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+        "name": "substring_wildcard_vs_ngram_optimiz",
+        "result_counts_equal": true,
+        "treatment": {
+          "average_latency_ms": 1.799929,
+          "iterations": 30,
+          "p95_latency_ms": 3.291209,
+          "result_count": 7314,
+          "result_count_consistent": true,
+          "throughput_per_second": 555.577,
+          "warmups": 5
+        },
+        "treatment_execution": "match on title_abstract.substring"
+      },
+      {
+        "average_latency_change_percent": -72.282,
+        "control": {
+          "average_latency_ms": 6.518411,
+          "iterations": 30,
+          "p95_latency_ms": 7.579,
+          "result_count": 2613,
+          "result_count_consistent": true,
+          "throughput_per_second": 153.412,
+          "warmups": 5
+        },
+        "control_execution": "wildcard *input*",
+        "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+        "name": "substring_wildcard_vs_ngram_databas",
+        "result_counts_equal": true,
+        "treatment": {
+          "average_latency_ms": 1.806775,
+          "iterations": 30,
+          "p95_latency_ms": 3.906333,
+          "result_count": 2613,
+          "result_count_consistent": true,
+          "throughput_per_second": 553.472,
+          "warmups": 5
+        },
+        "treatment_execution": "match on title_abstract.substring"
+      }
+    ],
+    "shard_ablation": {
+      "fixed_number_of_shards": 1,
+      "reason": "The fixed dataset is only 50k documents on one constrained single node; extra shards add coordination overhead and are not a useful candidate optimization.",
+      "status": "not_run"
+    },
+    "started_at": "2026-08-08T07:49:01.642Z",
+    "status": "passed"
+  },
+  "benchmark_type": "stage9_before_after_comparison",
+  "comparisons": [
+    {
+      "baseline": 2.831118,
+      "benchmark": "single_client_search",
+      "improvement_percent": 50.343,
+      "metric": "average_latency_ms",
+      "optimized": 1.405846,
+      "scenario": "aggregation_query_optimization"
+    },
+    {
+      "baseline": 4.034166,
+      "benchmark": "single_client_search",
+      "improvement_percent": 44.298,
+      "metric": "p95_latency_ms",
+      "optimized": 2.247125,
+      "scenario": "aggregation_query_optimization"
+    },
+    {
+      "baseline": 350.498511,
+      "benchmark": "single_client_search",
+      "improvement_percent": 101.85,
+      "metric": "throughput_per_second",
+      "optimized": 707.479726,
+      "scenario": "aggregation_query_optimization"
+    },
+    {
+      "baseline": 2.530479,
+      "benchmark": "single_client_search",
+      "improvement_percent": 28.962,
+      "metric": "average_latency_ms",
+      "optimized": 1.797599,
+      "scenario": "contain_database_systems_phrase"
+    },
+    {
+      "baseline": 3.802375,
+      "benchmark": "single_client_search",
+      "improvement_percent": 20.723,
+      "metric": "p95_latency_ms",
+      "optimized": 3.014417,
+      "scenario": "contain_database_systems_phrase"
+    },
+    {
+      "baseline": 390.689647,
+      "benchmark": "single_client_search",
+      "improvement_percent": 40.652,
+      "metric": "throughput_per_second",
+      "optimized": 549.513452,
+      "scenario": "contain_database_systems_phrase"
+    },
+    {
+      "baseline": 2.721399,
+      "benchmark": "single_client_search",
+      "improvement_percent": 52.949,
+      "metric": "average_latency_ms",
+      "optimized": 1.280443,
+      "scenario": "contain_indexing_not_blockchain"
+    },
+    {
+      "baseline": 3.648916,
+      "benchmark": "single_client_search",
+      "improvement_percent": 49.091,
+      "metric": "p95_latency_ms",
+      "optimized": 1.857625,
+      "scenario": "contain_indexing_not_blockchain"
+    },
+    {
+      "baseline": 364.520416,
+      "benchmark": "single_client_search",
+      "improvement_percent": 111.779,
+      "metric": "throughput_per_second",
+      "optimized": 771.978875,
+      "scenario": "contain_indexing_not_blockchain"
+    },
+    {
+      "baseline": 3.033282,
+      "benchmark": "single_client_search",
+      "improvement_percent": 38.195,
+      "metric": "average_latency_ms",
+      "optimized": 1.874711,
+      "scenario": "contain_processing_phrases_any"
+    },
+    {
+      "baseline": 4.430291,
+      "benchmark": "single_client_search",
+      "improvement_percent": 35.241,
+      "metric": "p95_latency_ms",
+      "optimized": 2.869,
+      "scenario": "contain_processing_phrases_any"
+    },
+    {
+      "baseline": 326.90006,
+      "benchmark": "single_client_search",
+      "improvement_percent": 61.388,
+      "metric": "throughput_per_second",
+      "optimized": 527.578822,
+      "scenario": "contain_processing_phrases_any"
+    },
+    {
+      "baseline": 6.587576,
+      "benchmark": "single_client_search",
+      "improvement_percent": 22.966,
+      "metric": "average_latency_ms",
+      "optimized": 5.074697,
+      "scenario": "fuzzy_databse_optimiztion"
+    },
+    {
+      "baseline": 7.750458,
+      "benchmark": "single_client_search",
+      "improvement_percent": 14.326,
+      "metric": "p95_latency_ms",
+      "optimized": 6.640166,
+      "scenario": "fuzzy_databse_optimiztion"
+    },
+    {
+      "baseline": 151.33824,
+      "benchmark": "single_client_search",
+      "improvement_percent": 29.8,
+      "metric": "throughput_per_second",
+      "optimized": 196.436908,
+      "scenario": "fuzzy_databse_optimiztion"
+    },
+    {
+      "baseline": 6.2776,
+      "benchmark": "single_client_search",
+      "improvement_percent": 18.276,
+      "metric": "average_latency_ms",
+      "optimized": 5.130282,
+      "scenario": "fuzzy_transacton_procesing"
+    },
+    {
+      "baseline": 8.071958,
+      "benchmark": "single_client_search",
+      "improvement_percent": 19.492,
+      "metric": "p95_latency_ms",
+      "optimized": 6.498541,
+      "scenario": "fuzzy_transacton_procesing"
+    },
+    {
+      "baseline": 158.463119,
+      "benchmark": "single_client_search",
+      "improvement_percent": 22.371,
+      "metric": "throughput_per_second",
+      "optimized": 193.912338,
+      "scenario": "fuzzy_transacton_procesing"
+    },
+    {
+      "baseline": 2.699283,
+      "benchmark": "single_client_search",
+      "improvement_percent": 39.739,
+      "metric": "average_latency_ms",
+      "optimized": 1.626628,
+      "scenario": "keyword_distributed_database"
+    },
+    {
+      "baseline": 3.438167,
+      "benchmark": "single_client_search",
+      "improvement_percent": 24.589,
+      "metric": "p95_latency_ms",
+      "optimized": 2.59275,
+      "scenario": "keyword_distributed_database"
+    },
+    {
+      "baseline": 366.956206,
+      "benchmark": "single_client_search",
+      "improvement_percent": 66.406,
+      "metric": "throughput_per_second",
+      "optimized": 610.637303,
+      "scenario": "keyword_distributed_database"
+    },
+    {
+      "baseline": 2.46806,
+      "benchmark": "single_client_search",
+      "improvement_percent": 36.28,
+      "metric": "average_latency_ms",
+      "optimized": 1.57265,
+      "scenario": "keyword_learned_indexes_cs_db"
+    },
+    {
+      "baseline": 3.524625,
+      "benchmark": "single_client_search",
+      "improvement_percent": 31.357,
+      "metric": "p95_latency_ms",
+      "optimized": 2.419417,
+      "scenario": "keyword_learned_indexes_cs_db"
+    },
+    {
+      "baseline": 403.010266,
+      "benchmark": "single_client_search",
+      "improvement_percent": 56.753,
+      "metric": "throughput_per_second",
+      "optimized": 631.729125,
+      "scenario": "keyword_learned_indexes_cs_db"
+    },
+    {
+      "baseline": 2.932551,
+      "benchmark": "single_client_search",
+      "improvement_percent": 43.452,
+      "metric": "average_latency_ms",
+      "optimized": 1.658296,
+      "scenario": "keyword_query_optimization"
+    },
+    {
+      "baseline": 3.743334,
+      "benchmark": "single_client_search",
+      "improvement_percent": 30.36,
+      "metric": "p95_latency_ms",
+      "optimized": 2.606875,
+      "scenario": "keyword_query_optimization"
+    },
+    {
+      "baseline": 337.442791,
+      "benchmark": "single_client_search",
+      "improvement_percent": 76.727,
+      "metric": "throughput_per_second",
+      "optimized": 596.353798,
+      "scenario": "keyword_query_optimization"
+    },
+    {
+      "baseline": 1.139851,
+      "benchmark": "load_test",
+      "improvement_percent": 10.681,
+      "metric": "average_latency_ms",
+      "optimized": 1.018102,
+      "scenario": "contain_clients_1"
+    },
+    {
+      "baseline": 1.531667,
+      "benchmark": "load_test",
+      "improvement_percent": 8.226,
+      "metric": "p95_latency_ms",
+      "optimized": 1.405666,
+      "scenario": "contain_clients_1"
+    },
+    {
+      "baseline": 868.624488,
+      "benchmark": "load_test",
+      "improvement_percent": 12.211,
+      "metric": "throughput_per_second",
+      "optimized": 974.688499,
+      "scenario": "contain_clients_1"
+    },
+    {
+      "baseline": 3.728468,
+      "benchmark": "load_test",
+      "improvement_percent": 3.367,
+      "metric": "average_latency_ms",
+      "optimized": 3.602931,
+      "scenario": "contain_clients_10"
+    },
+    {
+      "baseline": 5.5375,
+      "benchmark": "load_test",
+      "improvement_percent": 6.275,
+      "metric": "p95_latency_ms",
+      "optimized": 5.190042,
+      "scenario": "contain_clients_10"
+    },
+    {
+      "baseline": 2677.958217,
+      "benchmark": "load_test",
+      "improvement_percent": 3.48,
+      "metric": "throughput_per_second",
+      "optimized": 2771.146763,
+      "scenario": "contain_clients_10"
+    },
+    {
+      "baseline": 1.582759,
+      "benchmark": "load_test",
+      "improvement_percent": 3.084,
+      "metric": "average_latency_ms",
+      "optimized": 1.533945,
+      "scenario": "contain_clients_5"
+    },
+    {
+      "baseline": 2.811834,
+      "benchmark": "load_test",
+      "improvement_percent": 1.575,
+      "metric": "p95_latency_ms",
+      "optimized": 2.767542,
+      "scenario": "contain_clients_5"
+    },
+    {
+      "baseline": 3149.935661,
+      "benchmark": "load_test",
+      "improvement_percent": 3.182,
+      "metric": "throughput_per_second",
+      "optimized": 3250.1571,
+      "scenario": "contain_clients_5"
+    },
+    {
+      "baseline": 4.550024,
+      "benchmark": "load_test",
+      "improvement_percent": 3.773,
+      "metric": "average_latency_ms",
+      "optimized": 4.378334,
+      "scenario": "fuzzy_clients_1"
+    },
+    {
+      "baseline": 5.085417,
+      "benchmark": "load_test",
+      "improvement_percent": 3.911,
+      "metric": "p95_latency_ms",
+      "optimized": 4.886542,
+      "scenario": "fuzzy_clients_1"
+    },
+    {
+      "baseline": 218.694088,
+      "benchmark": "load_test",
+      "improvement_percent": 3.908,
+      "metric": "throughput_per_second",
+      "optimized": 227.240494,
+      "scenario": "fuzzy_clients_1"
+    },
+    {
+      "baseline": 20.795131,
+      "benchmark": "load_test",
+      "improvement_percent": 3.487,
+      "metric": "average_latency_ms",
+      "optimized": 20.070051,
+      "scenario": "fuzzy_clients_10"
+    },
+    {
+      "baseline": 63.7205,
+      "benchmark": "load_test",
+      "improvement_percent": 1.527,
+      "metric": "p95_latency_ms",
+      "optimized": 62.747542,
+      "scenario": "fuzzy_clients_10"
+    },
+    {
+      "baseline": 480.574069,
+      "benchmark": "load_test",
+      "improvement_percent": 3.605,
+      "metric": "throughput_per_second",
+      "optimized": 497.900715,
+      "scenario": "fuzzy_clients_10"
+    },
+    {
+      "baseline": 10.010352,
+      "benchmark": "load_test",
+      "improvement_percent": 3.031,
+      "metric": "average_latency_ms",
+      "optimized": 9.706924,
+      "scenario": "fuzzy_clients_5"
+    },
+    {
+      "baseline": 45.67675,
+      "benchmark": "load_test",
+      "improvement_percent": 1.654,
+      "metric": "p95_latency_ms",
+      "optimized": 44.921083,
+      "scenario": "fuzzy_clients_5"
+    },
+    {
+      "baseline": 498.822307,
+      "benchmark": "load_test",
+      "improvement_percent": 3.119,
+      "metric": "throughput_per_second",
+      "optimized": 514.38271,
+      "scenario": "fuzzy_clients_5"
+    },
+    {
+      "baseline": 27.295161,
+      "benchmark": "load_test",
+      "improvement_percent": 4.889,
+      "metric": "average_latency_ms",
+      "optimized": 25.960644,
+      "scenario": "hybrid_clients_10"
+    },
+    {
+      "baseline": 64.887709,
+      "benchmark": "load_test",
+      "improvement_percent": 4.296,
+      "metric": "p95_latency_ms",
+      "optimized": 62.100042,
+      "scenario": "hybrid_clients_10"
+    },
+    {
+      "baseline": 366.193628,
+      "benchmark": "load_test",
+      "improvement_percent": 5.143,
+      "metric": "throughput_per_second",
+      "optimized": 385.027059,
+      "scenario": "hybrid_clients_10"
+    },
+    {
+      "baseline": 1.186055,
+      "benchmark": "load_test",
+      "improvement_percent": 21.177,
+      "metric": "average_latency_ms",
+      "optimized": 0.93489,
+      "scenario": "keyword_clients_1"
+    },
+    {
+      "baseline": 1.55775,
+      "benchmark": "load_test",
+      "improvement_percent": 25.221,
+      "metric": "p95_latency_ms",
+      "optimized": 1.164875,
+      "scenario": "keyword_clients_1"
+    },
+    {
+      "baseline": 835.727455,
+      "benchmark": "load_test",
+      "improvement_percent": 26.682,
+      "metric": "throughput_per_second",
+      "optimized": 1058.716649,
+      "scenario": "keyword_clients_1"
+    },
+    {
+      "baseline": 4.452465,
+      "benchmark": "load_test",
+      "improvement_percent": 27.083,
+      "metric": "average_latency_ms",
+      "optimized": 3.246599,
+      "scenario": "keyword_clients_10"
+    },
+    {
+      "baseline": 6.399,
+      "benchmark": "load_test",
+      "improvement_percent": 26.754,
+      "metric": "p95_latency_ms",
+      "optimized": 4.687042,
+      "scenario": "keyword_clients_10"
+    },
+    {
+      "baseline": 2243.045457,
+      "benchmark": "load_test",
+      "improvement_percent": 37.089,
+      "metric": "throughput_per_second",
+      "optimized": 3074.963542,
+      "scenario": "keyword_clients_10"
+    },
+    {
+      "baseline": 1.915133,
+      "benchmark": "load_test",
+      "improvement_percent": 28.76,
+      "metric": "average_latency_ms",
+      "optimized": 1.364335,
+      "scenario": "keyword_clients_5"
+    },
+    {
+      "baseline": 3.077958,
+      "benchmark": "load_test",
+      "improvement_percent": 18.27,
+      "metric": "p95_latency_ms",
+      "optimized": 2.515625,
+      "scenario": "keyword_clients_5"
+    },
+    {
+      "baseline": 2603.738723,
+      "benchmark": "load_test",
+      "improvement_percent": 40.313,
+      "metric": "throughput_per_second",
+      "optimized": 3653.394208,
+      "scenario": "keyword_clients_5"
+    },
+    {
+      "baseline": 1.210297,
+      "benchmark": "hybrid",
+      "improvement_percent": 25.586,
+      "metric": "average_latency_ms",
+      "optimized": 0.900628,
+      "scenario": "databse_optimiztion:contain"
+    },
+    {
+      "baseline": 2.579125,
+      "benchmark": "hybrid",
+      "improvement_percent": 30.978,
+      "metric": "p95_latency_ms",
+      "optimized": 1.780167,
+      "scenario": "databse_optimiztion:contain"
+    },
+    {
+      "baseline": 818.433858,
+      "benchmark": "hybrid",
+      "improvement_percent": 34.053,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 1097.137845,
+      "scenario": "databse_optimiztion:contain"
+    },
+    {
+      "baseline": 7.254671,
+      "benchmark": "hybrid",
+      "improvement_percent": 12.175,
+      "metric": "average_latency_ms",
+      "optimized": 6.371421,
+      "scenario": "databse_optimiztion:fuzzy"
+    },
+    {
+      "baseline": 8.308041,
+      "benchmark": "hybrid",
+      "improvement_percent": 11.37,
+      "metric": "p95_latency_ms",
+      "optimized": 7.363458,
+      "scenario": "databse_optimiztion:fuzzy"
+    },
+    {
+      "baseline": 135.916168,
+      "benchmark": "hybrid",
+      "improvement_percent": 14.035,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 154.992302,
+      "scenario": "databse_optimiztion:fuzzy"
+    },
+    {
+      "baseline": 9.326289,
+      "benchmark": "hybrid",
+      "improvement_percent": -4.259,
+      "metric": "average_latency_ms",
+      "optimized": 9.723537,
+      "scenario": "databse_optimiztion:hybrid"
+    },
+    {
+      "baseline": 10.96275,
+      "benchmark": "hybrid",
+      "improvement_percent": -31.129,
+      "metric": "p95_latency_ms",
+      "optimized": 14.375333,
+      "scenario": "databse_optimiztion:hybrid"
+    },
+    {
+      "baseline": 106.590821,
+      "benchmark": "hybrid",
+      "improvement_percent": -3.889,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 102.444992,
+      "scenario": "databse_optimiztion:hybrid"
+    },
+    {
+      "baseline": 1.354122,
+      "benchmark": "hybrid",
+      "improvement_percent": 25.58,
+      "metric": "average_latency_ms",
+      "optimized": 1.00774,
+      "scenario": "databse_optimiztion:keyword"
+    },
+    {
+      "baseline": 2.462375,
+      "benchmark": "hybrid",
+      "improvement_percent": 16.398,
+      "metric": "p95_latency_ms",
+      "optimized": 2.058583,
+      "scenario": "databse_optimiztion:keyword"
+    },
+    {
+      "baseline": 733.98911,
+      "benchmark": "hybrid",
+      "improvement_percent": 34.137,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 984.55208,
+      "scenario": "databse_optimiztion:keyword"
+    },
+    {
+      "baseline": 3.860763,
+      "benchmark": "hybrid",
+      "improvement_percent": 22.683,
+      "metric": "average_latency_ms",
+      "optimized": 2.985043,
+      "scenario": "learned_indexes:contain"
+    },
+    {
+      "baseline": 4.792375,
+      "benchmark": "hybrid",
+      "improvement_percent": 0.457,
+      "metric": "p95_latency_ms",
+      "optimized": 4.770459,
+      "scenario": "learned_indexes:contain"
+    },
+    {
+      "baseline": 255.292896,
+      "benchmark": "hybrid",
+      "improvement_percent": 29.191,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 329.81485,
+      "scenario": "learned_indexes:contain"
+    },
+    {
+      "baseline": 6.176528,
+      "benchmark": "hybrid",
+      "improvement_percent": 1.674,
+      "metric": "average_latency_ms",
+      "optimized": 6.073142,
+      "scenario": "learned_indexes:fuzzy"
+    },
+    {
+      "baseline": 7.824584,
+      "benchmark": "hybrid",
+      "improvement_percent": 4.16,
+      "metric": "p95_latency_ms",
+      "optimized": 7.499084,
+      "scenario": "learned_indexes:fuzzy"
+    },
+    {
+      "baseline": 159.13867,
+      "benchmark": "hybrid",
+      "improvement_percent": 1.999,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 162.319364,
+      "scenario": "learned_indexes:fuzzy"
+    },
+    {
+      "baseline": 5.020385,
+      "benchmark": "hybrid",
+      "improvement_percent": 9.034,
+      "metric": "average_latency_ms",
+      "optimized": 4.566831,
+      "scenario": "learned_indexes:hybrid"
+    },
+    {
+      "baseline": 6.177,
+      "benchmark": "hybrid",
+      "improvement_percent": -5.724,
+      "metric": "p95_latency_ms",
+      "optimized": 6.530583,
+      "scenario": "learned_indexes:hybrid"
+    },
+    {
+      "baseline": 196.887643,
+      "benchmark": "hybrid",
+      "improvement_percent": 10.437,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 217.437786,
+      "scenario": "learned_indexes:hybrid"
+    },
+    {
+      "baseline": 4.41981,
+      "benchmark": "hybrid",
+      "improvement_percent": 31.124,
+      "metric": "average_latency_ms",
+      "optimized": 3.044201,
+      "scenario": "learned_indexes:keyword"
+    },
+    {
+      "baseline": 7.1715,
+      "benchmark": "hybrid",
+      "improvement_percent": 45.192,
+      "metric": "p95_latency_ms",
+      "optimized": 3.930542,
+      "scenario": "learned_indexes:keyword"
+    },
+    {
+      "baseline": 220.501831,
+      "benchmark": "hybrid",
+      "improvement_percent": 46.502,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 323.039733,
+      "scenario": "learned_indexes:keyword"
+    },
+    {
+      "baseline": 3.538972,
+      "benchmark": "hybrid",
+      "improvement_percent": 9.501,
+      "metric": "average_latency_ms",
+      "optimized": 3.202749,
+      "scenario": "query_optimization:contain"
+    },
+    {
+      "baseline": 4.531083,
+      "benchmark": "hybrid",
+      "improvement_percent": -4.99,
+      "metric": "p95_latency_ms",
+      "optimized": 4.757167,
+      "scenario": "query_optimization:contain"
+    },
+    {
+      "baseline": 273.659269,
+      "benchmark": "hybrid",
+      "improvement_percent": 11.146,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 304.16028,
+      "scenario": "query_optimization:contain"
+    },
+    {
+      "baseline": 5.840042,
+      "benchmark": "hybrid",
+      "improvement_percent": 1.473,
+      "metric": "average_latency_ms",
+      "optimized": 5.754033,
+      "scenario": "query_optimization:fuzzy"
+    },
+    {
+      "baseline": 7.181167,
+      "benchmark": "hybrid",
+      "improvement_percent": 3.852,
+      "metric": "p95_latency_ms",
+      "optimized": 6.904583,
+      "scenario": "query_optimization:fuzzy"
+    },
+    {
+      "baseline": 168.166541,
+      "benchmark": "hybrid",
+      "improvement_percent": 1.652,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 170.945,
+      "scenario": "query_optimization:fuzzy"
+    },
+    {
+      "baseline": 5.919132,
+      "benchmark": "hybrid",
+      "improvement_percent": 14.419,
+      "metric": "average_latency_ms",
+      "optimized": 5.065649,
+      "scenario": "query_optimization:hybrid"
+    },
+    {
+      "baseline": 7.244625,
+      "benchmark": "hybrid",
+      "improvement_percent": 12.287,
+      "metric": "p95_latency_ms",
+      "optimized": 6.3545,
+      "scenario": "query_optimization:hybrid"
+    },
+    {
+      "baseline": 166.013527,
+      "benchmark": "hybrid",
+      "improvement_percent": 18.06,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 195.995112,
+      "scenario": "query_optimization:hybrid"
+    },
+    {
+      "baseline": 4.129647,
+      "benchmark": "hybrid",
+      "improvement_percent": 18.486,
+      "metric": "average_latency_ms",
+      "optimized": 3.366254,
+      "scenario": "query_optimization:keyword"
+    },
+    {
+      "baseline": 5.151459,
+      "benchmark": "hybrid",
+      "improvement_percent": 16.9,
+      "metric": "p95_latency_ms",
+      "optimized": 4.280875,
+      "scenario": "query_optimization:keyword"
+    },
+    {
+      "baseline": 238.218442,
+      "benchmark": "hybrid",
+      "improvement_percent": 21.364,
+      "metric": "user_facing_throughput_per_second",
+      "optimized": 289.11053,
+      "scenario": "query_optimization:keyword"
+    }
+  ],
+  "index_tradeoffs": {
+    "baseline_ingestion_seconds": 7.720882,
+    "baseline_store_size_bytes": 103115792,
+    "optimized_ingestion_seconds": 20.500629,
+    "optimized_store_size_bytes": 366392266,
+    "quality_precision_at_10_unchanged": true,
+    "store_size_change_percent": 255.321
+  },
+  "protocol_invariants": {
+    "dataset_sha256_equal": true,
+    "ingestion_batch_size_equal": true,
+    "load_duration_equal": true,
+    "load_seed_equal": true,
+    "mandatory_load_scenarios_equal": true,
+    "single_client_protocol_equal": true
+  },
+  "status": "passed"
+}

@@ -34,6 +34,7 @@ DEFAULT_JSON_REPORT = Path("results/search_baseline.json")
 DEFAULT_CSV_REPORT = Path("results/search_baseline.csv")
 DEFAULT_CHART = Path("results/search_baseline_latency.png")
 BASELINE_INDEX = "arxiv_papers_baseline"
+OPTIMIZED_INDEX = "arxiv_papers_optimized"
 BASELINE_WARMUPS = 5
 BASELINE_ITERATIONS = 30
 BASELINE_SEED = 20250808
@@ -535,9 +536,10 @@ def run_benchmark(
 ) -> dict[str, Any]:
     if warmups < 0 or iterations <= 0 or timeout <= 0 or resource_interval <= 0:
         raise BenchmarkError("warmups must be non-negative and other numeric values positive")
+    expected_index = BASELINE_INDEX if execution == "baseline" else OPTIMIZED_INDEX
     compliant = (
-        index == BASELINE_INDEX
-        and execution == "baseline"
+        index == expected_index
+        and execution in {"baseline", "optimized"}
         and warmups >= BASELINE_WARMUPS
         and iterations >= BASELINE_ITERATIONS
     )
@@ -612,8 +614,14 @@ def run_benchmark(
     )
     return {
         "status": status,
-        "benchmark_type": "baseline_single_client_search" if compliant else "diagnostic_search",
-        "is_performance_baseline": compliant,
+        "benchmark_type": (
+            "baseline_single_client_search"
+            if compliant and execution == "baseline"
+            else "optimized_single_client_search"
+            if compliant
+            else "diagnostic_search"
+        ),
+        "is_performance_baseline": compliant and execution == "baseline",
         "protocol_compliant": compliant,
         "host": base_url,
         "index": index,

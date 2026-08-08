@@ -1,0 +1,190 @@
+{
+  "benchmark_type": "stage9_single_variable_ablations",
+  "finished_at": "2026-08-08T07:49:28.901Z",
+  "ingestion_ablations": [
+    {
+      "batch_size": 250,
+      "bulk_error_count": 0,
+      "document_count": 50000,
+      "documents_per_second": 7828.578,
+      "duration_seconds": 6.386856,
+      "isolated_variable": "batch_size",
+      "name": "batch_250",
+      "refresh_interval_during_ingestion": "1s (default)"
+    },
+    {
+      "batch_size": 500,
+      "bulk_error_count": 0,
+      "document_count": 50000,
+      "documents_per_second": 8319.466,
+      "duration_seconds": 6.010001,
+      "isolated_variable": "batch_size",
+      "name": "batch_500_control",
+      "refresh_interval_during_ingestion": "1s (default)"
+    },
+    {
+      "batch_size": 1000,
+      "bulk_error_count": 0,
+      "document_count": 50000,
+      "documents_per_second": 8428.97,
+      "duration_seconds": 5.931923,
+      "isolated_variable": "batch_size",
+      "name": "batch_1000",
+      "refresh_interval_during_ingestion": "1s (default)"
+    },
+    {
+      "batch_size": 500,
+      "bulk_error_count": 0,
+      "document_count": 50000,
+      "documents_per_second": 7241.451,
+      "duration_seconds": 6.904693,
+      "isolated_variable": "refresh_interval",
+      "name": "refresh_disabled",
+      "refresh_interval_during_ingestion": "-1"
+    }
+  ],
+  "protocol": {
+    "dataset_sha256": "86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6",
+    "iterations": 30,
+    "warmups": 5
+  },
+  "search_ablations": [
+    {
+      "average_latency_change_percent": -35.946,
+      "control": {
+        "average_latency_ms": 2.575183,
+        "iterations": 30,
+        "p95_latency_ms": 4.165125,
+        "result_count": 7321,
+        "result_count_consistent": true,
+        "throughput_per_second": 388.322,
+        "warmups": 5
+      },
+      "control_execution": "title^2 + abstract + duplicated title_abstract",
+      "isolated_variable": "queried fields only; index, analyzer, input, filters, and protocol fixed",
+      "name": "query_structure_remove_duplicate_title_abstract",
+      "result_counts_equal": true,
+      "treatment": {
+        "average_latency_ms": 1.649515,
+        "iterations": 30,
+        "p95_latency_ms": 2.958167,
+        "result_count": 7321,
+        "result_count_consistent": true,
+        "throughput_per_second": 606.239,
+        "warmups": 5
+      },
+      "treatment_execution": "title^2 + abstract"
+    },
+    {
+      "average_latency_change_percent": 19.374,
+      "control": {
+        "average_latency_ms": 1.586354,
+        "iterations": 30,
+        "p95_latency_ms": 2.757125,
+        "result_count": 7321,
+        "result_count_consistent": true,
+        "throughput_per_second": 630.376,
+        "warmups": 5
+      },
+      "control_execution": "title^2 + abstract (standard)",
+      "isolated_variable": "standard versus English analyzer multi-fields on the same documents/index",
+      "name": "english_analyzer",
+      "result_counts_equal": false,
+      "treatment": {
+        "average_latency_ms": 1.893687,
+        "iterations": 30,
+        "p95_latency_ms": 3.30425,
+        "result_count": 13222,
+        "result_count_consistent": true,
+        "throughput_per_second": 528.07,
+        "warmups": 5
+      },
+      "treatment_execution": "title.english^2 + abstract.english"
+    },
+    {
+      "average_latency_change_percent": -74.974,
+      "control": {
+        "average_latency_ms": 6.775763,
+        "iterations": 30,
+        "p95_latency_ms": 7.901333,
+        "result_count": 2374,
+        "result_count_consistent": true,
+        "throughput_per_second": 147.585,
+        "warmups": 5
+      },
+      "control_execution": "wildcard *input*",
+      "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+      "name": "substring_wildcard_vs_ngram_transact",
+      "result_counts_equal": true,
+      "treatment": {
+        "average_latency_ms": 1.695686,
+        "iterations": 30,
+        "p95_latency_ms": 2.722208,
+        "result_count": 2374,
+        "result_count_consistent": true,
+        "throughput_per_second": 589.732,
+        "warmups": 5
+      },
+      "treatment_execution": "match on title_abstract.substring"
+    },
+    {
+      "average_latency_change_percent": -74.136,
+      "control": {
+        "average_latency_ms": 6.959271,
+        "iterations": 30,
+        "p95_latency_ms": 8.2065,
+        "result_count": 7314,
+        "result_count_consistent": true,
+        "throughput_per_second": 143.693,
+        "warmups": 5
+      },
+      "control_execution": "wildcard *input*",
+      "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+      "name": "substring_wildcard_vs_ngram_optimiz",
+      "result_counts_equal": true,
+      "treatment": {
+        "average_latency_ms": 1.799929,
+        "iterations": 30,
+        "p95_latency_ms": 3.291209,
+        "result_count": 7314,
+        "result_count_consistent": true,
+        "throughput_per_second": 555.577,
+        "warmups": 5
+      },
+      "treatment_execution": "match on title_abstract.substring"
+    },
+    {
+      "average_latency_change_percent": -72.282,
+      "control": {
+        "average_latency_ms": 6.518411,
+        "iterations": 30,
+        "p95_latency_ms": 7.579,
+        "result_count": 2613,
+        "result_count_consistent": true,
+        "throughput_per_second": 153.412,
+        "warmups": 5
+      },
+      "control_execution": "wildcard *input*",
+      "isolated_variable": "wildcard versus n-gram execution on identical source text, input, index, and protocol",
+      "name": "substring_wildcard_vs_ngram_databas",
+      "result_counts_equal": true,
+      "treatment": {
+        "average_latency_ms": 1.806775,
+        "iterations": 30,
+        "p95_latency_ms": 3.906333,
+        "result_count": 2613,
+        "result_count_consistent": true,
+        "throughput_per_second": 553.472,
+        "warmups": 5
+      },
+      "treatment_execution": "match on title_abstract.substring"
+    }
+  ],
+  "shard_ablation": {
+    "fixed_number_of_shards": 1,
+    "reason": "The fixed dataset is only 50k documents on one constrained single node; extra shards add coordination overhead and are not a useful candidate optimization.",
+    "status": "not_run"
+  },
+  "started_at": "2026-08-08T07:49:01.642Z",
+  "status": "passed"
+}

@@ -24,6 +24,9 @@ DEFAULT_INPUTS = [
     Path("results/search_baseline.json"),
     Path("results/hybrid_comparison.json"),
     Path("results/load_test_baseline.json"),
+    Path("results/search_optimized.json"),
+    Path("results/hybrid_comparison_optimized.json"),
+    Path("results/load_test_optimized.json"),
 ]
 DEFAULT_JSON = Path("results/metrics_summary.json")
 DEFAULT_CSV = Path("results/metrics_summary.csv")
@@ -299,6 +302,8 @@ def source_csv_path(report: dict[str, Any], json_path: Path) -> Path:
         return json_path.with_name("search_baseline.csv")
     if report["benchmark_type"] in {"stage6_hybrid_comparison", "stage6_diagnostic"}:
         return json_path.with_name("hybrid_performance.csv")
+    if report["benchmark_type"] == "stage6_hybrid_comparison_optimized":
+        return json_path.with_name("hybrid_performance_optimized.csv")
     return json_path.with_suffix(".csv")
 
 

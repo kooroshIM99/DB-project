@@ -9,6 +9,7 @@ from scripts import plot_metrics, run_load_tests
 
 
 CONTRACT_PATH = Path("queries/load_test_scenarios.json")
+OPTIMIZED_CONTRACT_PATH = Path("queries/load_test_scenarios_optimized.json")
 
 
 def test_contract_contains_exact_mandatory_matrix_and_pools() -> None:
@@ -60,6 +61,22 @@ def test_query_pools_resolve_to_stage5_and_stage6_contracts() -> None:
         "hybrid"
     ]["query_ids"]
     assert hybrid_contract["architecture"]["rrf_k"] == 60
+
+
+def test_stage9_load_contract_replays_same_matrix_with_optimized_execution() -> None:
+    baseline = run_load_tests.load_contract(CONTRACT_PATH)
+    optimized = run_load_tests.load_contract(OPTIMIZED_CONTRACT_PATH)
+    assert optimized["mandatory_scenarios"] == baseline["mandatory_scenarios"]
+    assert optimized["query_pools"] == baseline["query_pools"]
+    assert optimized["defaults"]["base_seed"] == baseline["defaults"]["base_seed"]
+    assert optimized["defaults"]["index"] == "arxiv_papers_optimized"
+    assert optimized["defaults"]["base_execution"] == "optimized"
+    pools, _ = run_load_tests.load_query_pools(
+        optimized,
+        Path("queries/search_queries_optimized.json"),
+        Path("queries/hybrid_comparison_queries_optimized.json"),
+    )
+    assert all("optimized" in query["execution"] for query in pools["keyword"])
 
 
 def test_stable_seed_is_reproducible_and_phase_specific() -> None:

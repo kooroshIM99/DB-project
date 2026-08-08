@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "description": "Stage-9 optimized replay of the fixed stage-8 multi-client workload.",
+  "defaults": {
+    "index": "arxiv_papers_optimized",
+    "base_seed": 20250808,
+    "warmup_seconds": 10,
+    "measurement_seconds": 60,
+    "minimum_measured_requests": 100,
+    "request_timeout_seconds": 10,
+    "resource_sample_interval_seconds": 1,
+    "execution_model": "closed_loop_continuous_no_think_time",
+    "simultaneous_measurement_start": "threading.Barrier after warm-up",
+    "connection_pooling": "one persistent HTTP/1.1 session per base client; hybrid uses three persistent sessions and one persistent two-thread executor per client",
+    "query_selection": "independent per-client seeded PRNG with equal pool weights",
+    "warmup_rng_is_separate": true,
+    "base_execution": "optimized"
+  },
+  "query_sources": {
+    "base": "queries/search_queries_optimized.json",
+    "hybrid": "queries/hybrid_comparison_queries_optimized.json"
+  },
+  "query_pools": {
+    "keyword": {
+      "source": "base",
+      "query_ids": [
+        "keyword_query_optimization",
+        "keyword_distributed_database",
+        "keyword_learned_indexes_cs_db"
+      ],
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    "contain": {
+      "source": "base",
+      "query_ids": [
+        "contain_database_systems_phrase",
+        "contain_indexing_not_blockchain",
+        "contain_processing_phrases_any"
+      ],
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    },
+    "fuzzy": {
+      "source": "base",
+      "query_ids": [
+        "fuzzy_databse_optimiztion",
+        "fuzzy_transacton_procesing"
+      ],
+      "weights": [
+        1,
+        1
+      ]
+    },
+    "hybrid": {
+      "source": "hybrid",
+      "query_ids": [
+        "learned_indexes",
+        "query_optimization",
+        "databse_optimiztion"
+      ],
+      "weights": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "mandatory_scenarios": [
+    {
+      "id": "keyword_clients_1",
+      "search_type": "keyword",
+      "client_count": 1
+    },
+    {
+      "id": "keyword_clients_5",
+      "search_type": "keyword",
+      "client_count": 5
+    },
+    {
+      "id": "keyword_clients_10",
+      "search_type": "keyword",
+      "client_count": 10
+    },
+    {
+      "id": "contain_clients_1",
+      "search_type": "contain",
+      "client_count": 1
+    },
+    {
+      "id": "contain_clients_5",
+      "search_type": "contain",
+      "client_count": 5
+    },
+    {
+      "id": "contain_clients_10",
+      "search_type": "contain",
+      "client_count": 10
+    },
+    {
+      "id": "fuzzy_clients_1",
+      "search_type": "fuzzy",
+      "client_count": 1
+    },
+    {
+      "id": "fuzzy_clients_5",
+      "search_type": "fuzzy",
+      "client_count": 5
+    },
+    {
+      "id": "fuzzy_clients_10",
+      "search_type": "fuzzy",
+      "client_count": 10
+    },
+    {
+      "id": "hybrid_clients_10",
+      "search_type": "hybrid",
+      "client_count": 10
+    }
+  ],
+  "pressure_evaluation": {
+    "compare_client_counts": [
+      1,
+      10
+    ],
+    "noticeable_latency_or_p95_ratio": 1.25,
+    "maximum_per_client_throughput_efficiency": 0.75,
+    "optional_client_counts_if_not_observed": [
+      20,
+      50,
+      100
+    ]
+  }
+}
+

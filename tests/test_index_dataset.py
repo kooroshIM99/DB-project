@@ -53,6 +53,16 @@ def test_bulk_body_uses_paper_id_as_id_and_ndjson() -> None:
     assert json.loads(lines[1]) == document
 
 
+def test_bulk_body_can_target_only_an_explicit_stage9_index() -> None:
+    document = {"paper_id": "one"}
+    action = json.loads(
+        index_dataset.make_bulk_body([(1, document)], "arxiv_papers_optimized")
+        .decode()
+        .splitlines()[0]
+    )
+    assert action["index"]["_index"] == "arxiv_papers_optimized"
+
+
 def test_inspect_bulk_response_counts_successes_and_errors() -> None:
     batch = [(1, {"paper_id": "one"}), (2, {"paper_id": "two"})]
     response = {

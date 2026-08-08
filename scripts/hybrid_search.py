@@ -31,6 +31,7 @@ DEFAULT_JSON_REPORT = Path("results/hybrid_comparison.json")
 DEFAULT_PERFORMANCE_CSV = Path("results/hybrid_performance.csv")
 DEFAULT_JUDGMENT_TEMPLATE = Path("results/relevance_judgments_template.csv")
 BASELINE_INDEX = "arxiv_papers_baseline"
+OPTIMIZED_INDEX = "arxiv_papers_optimized"
 METHODS = ("keyword", "contain", "fuzzy", "hybrid")
 DEFAULT_WARMUPS = 5
 DEFAULT_ITERATIONS = 30
@@ -547,7 +548,7 @@ def run_comparison(
     if warmups < 0 or iterations <= 0 or timeout <= 0 or resource_interval <= 0:
         raise HybridError("warmups must be non-negative and other numeric values positive")
     compliant = (
-        index == BASELINE_INDEX
+        index in {BASELINE_INDEX, OPTIMIZED_INDEX}
         and warmups >= DEFAULT_WARMUPS
         and iterations >= DEFAULT_ITERATIONS
     )
@@ -611,7 +612,13 @@ def run_comparison(
     )
     return {
         "status": status,
-        "benchmark_type": "stage6_hybrid_comparison" if compliant else "stage6_diagnostic",
+        "benchmark_type": (
+            "stage6_hybrid_comparison_optimized"
+            if compliant and index == OPTIMIZED_INDEX
+            else "stage6_hybrid_comparison"
+            if compliant
+            else "stage6_diagnostic"
+        ),
         "protocol_compliant": compliant,
         "index": index,
         "host": base_url,
