@@ -25,3 +25,13 @@ All latency, P95, throughput, and error-rate values below were recalculated from
 | hybrid_comparison | databse_optimiztion:contain:clients=1 | 1.210 | 2.579 | 818.44 | 818.44 | 0.000% | 50,000 | 98.34 | 7.77/7.77 | 74.96/74.96 |
 | hybrid_comparison | learned_indexes:fuzzy:clients=1 | 6.177 | 7.825 | 159.14 | 159.14 | 0.000% | 50,000 | 98.34 | 7.77/7.77 | 74.96/74.96 |
 | hybrid_comparison | query_optimization:hybrid:clients=1 | 5.919 | 7.245 | 166.01 | 332.03 | 0.000% | 50,000 | 98.34 | 7.77/7.77 | 74.96/74.96 |
+| load_test_baseline | keyword_clients_1:keyword:clients=1 | 1.186 | 1.558 | 835.73 | 835.73 | 0.000% | 50,000 | 98.34 | 51.04/60.22 | 75.50/75.53 |
+| load_test_baseline | keyword_clients_5:keyword:clients=5 | 1.915 | 3.078 | 2603.74 | 2603.74 | 0.000% | 50,000 | 98.34 | 206.38/208.70 | 75.49/75.51 |
+| load_test_baseline | keyword_clients_10:keyword:clients=10 | 4.452 | 6.399 | 2243.05 | 2243.05 | 0.000% | 50,000 | 98.34 | 198.38/207.31 | 75.49/75.52 |
+| load_test_baseline | contain_clients_1:contain:clients=1 | 1.140 | 1.532 | 868.62 | 868.62 | 0.000% | 50,000 | 98.34 | 45.69/58.39 | 75.52/75.57 |
+| load_test_baseline | contain_clients_5:contain:clients=5 | 1.583 | 2.812 | 3149.94 | 3149.94 | 0.000% | 50,000 | 98.34 | 201.78/210.17 | 75.55/75.58 |
+| load_test_baseline | contain_clients_10:contain:clients=10 | 3.728 | 5.537 | 2677.96 | 2677.96 | 0.000% | 50,000 | 98.34 | 200.41/209.59 | 75.57/75.64 |
+| load_test_baseline | fuzzy_clients_1:fuzzy:clients=1 | 4.550 | 5.085 | 218.69 | 218.69 | 0.000% | 50,000 | 98.34 | 79.34/83.87 | 75.63/75.66 |
+| load_test_baseline | fuzzy_clients_5:fuzzy:clients=5 | 10.010 | 45.677 | 498.82 | 498.82 | 0.000% | 50,000 | 98.34 | 200.66/203.07 | 75.62/75.67 |
+| load_test_baseline | fuzzy_clients_10:fuzzy:clients=10 | 20.795 | 63.721 | 480.57 | 480.57 | 0.000% | 50,000 | 98.34 | 201.85/206.68 | 75.67/75.69 |
+| load_test_baseline | hybrid_clients_10:hybrid:clients=10 | 27.295 | 64.888 | 366.19 | 855.56 | 0.000% | 50,000 | 98.34 | 197.11/208.38 | 75.67/75.71 |

@@ -167,6 +167,7 @@ def test_defaults_include_stage5_and_stage6_artifacts() -> None:
     assert plot_metrics.DEFAULT_INPUTS == [
         Path("results/search_baseline.json"),
         Path("results/hybrid_comparison.json"),
+        Path("results/load_test_baseline.json"),
     ]
     assert args.json_output == Path("results/metrics_summary.json")
     assert args.dashboard == Path("results/metrics_dashboard.png")

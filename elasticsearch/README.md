@@ -229,6 +229,41 @@ and identifier, index metadata, system metrics, and an accompanying CSV with the
 same stem. This preserves the same latency, P95, throughput, and error-rate
 definitions across baseline, load-test, and optimized runs.
 
+## Stage 8 Multi-client Load Tests
+
+The fixed query pools, equal weights, seeds, mandatory scenario matrix, timing,
+timeout, barrier, closed-loop model, and persistent-connection policy are in
+`queries/load_test_scenarios.json`. Run all ten required scenarios:
+
+```bash
+python scripts/run_load_tests.py
+```
+
+The command runs keyword, contain, and fuzzy pools with 1, 5, and 10 concurrent
+clients, plus hybrid with 10 clients. Every scenario has a separate 10-second
+warm-up followed by at least 60 seconds of measurement and 100 latency samples.
+Each client uses a deterministic query sequence and persistent HTTP/1.1
+connection. Hybrid clients retain three connections and a two-thread executor
+so keyword and contain remain parallel while fuzzy stays conditional.
+
+Generated artifacts:
+
+- `results/load_test_baseline.json`: protocol, hashes, environment, scenario
+  summaries, resource samples, pressure evaluation, and raw-artifact references
+- `results/load_test_measurements.jsonl.gz`: all request-level measurements in
+  lossless gzip JSON Lines, with per-client order and latency
+- `results/load_test_baseline.csv`: comparison table
+- `results/load_test_latency.png`: average/P95 versus client count
+- `results/load_test_throughput.png`: user-facing throughput versus client count
+- `results/stage8_analysis.md`: methodology, results, and pressure analysis
+
+The verified run completed all ten scenarios with 836,652 measured user
+searches, 866,021 internal Elasticsearch requests, and zero errors. Clear
+pressure appeared by ten clients for every base search type, so the optional
+20/50/100-client extension was not required. Re-running `scripts/plot_metrics.py`
+now validates the compressed raw requests and includes all ten load scenarios in
+the normalized stage-7 tables and dashboard.
+
 ### Verified Stage 4 Result
 
 - Status: passed

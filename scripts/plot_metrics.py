@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import math
 import statistics
@@ -22,6 +23,7 @@ except ModuleNotFoundError:  # Direct execution from scripts/.
 DEFAULT_INPUTS = [
     Path("results/search_baseline.json"),
     Path("results/hybrid_comparison.json"),
+    Path("results/load_test_baseline.json"),
 ]
 DEFAULT_JSON = Path("results/metrics_summary.json")
 DEFAULT_CSV = Path("results/metrics_summary.csv")
@@ -82,7 +84,52 @@ def load_report(path: Path) -> dict[str, Any]:
         raise MetricsError(f"benchmark report {path} has no scenarios")
     if not isinstance(report.get("runtime", {}).get("index"), dict):
         raise MetricsError(f"benchmark report {path} has no index runtime metadata")
+    hydrate_external_measurements(report, path)
     return report
+
+
+def hydrate_external_measurements(report: dict[str, Any], report_path: Path) -> None:
+    missing = [scenario for scenario in report.get("scenarios", []) if "measurements" not in scenario]
+    if not missing:
+        return
+    artifacts = {scenario.get("measurements_artifact", {}).get("path") for scenario in missing}
+    if None in artifacts or len(artifacts) != 1:
+        raise MetricsError(f"report {report_path} has invalid external measurement references")
+    configured_path = Path(next(iter(artifacts)))
+    measurement_path = configured_path
+    if not measurement_path.is_file():
+        measurement_path = report_path.parent / configured_path.name
+    if not measurement_path.is_file():
+        raise MetricsError(f"external measurements not found: {configured_path}")
+    expected_hashes = {
+        scenario["measurements_artifact"].get("sha256") for scenario in missing
+    }
+    actual_hash = benchmark.sha256_file(measurement_path)
+    if expected_hashes != {actual_hash}:
+        raise MetricsError("external measurement artifact hash mismatch")
+    by_scenario: dict[str, list[dict[str, Any]]] = {
+        scenario["scenario_id"]: [] for scenario in missing
+    }
+    try:
+        with gzip.open(measurement_path, "rt", encoding="utf-8") as file:
+            for line_number, line in enumerate(file, start=1):
+                record = json.loads(line)
+                scenario_id = record.pop("scenario_id", None)
+                if scenario_id not in by_scenario:
+                    raise MetricsError(
+                        f"unexpected scenario {scenario_id!r} in measurements line {line_number}"
+                    )
+                by_scenario[scenario_id].append(record)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise MetricsError(f"cannot read external measurements {measurement_path}: {exc}") from exc
+    for scenario in missing:
+        records = by_scenario[scenario["scenario_id"]]
+        expected_count = scenario["measurements_artifact"].get("record_count")
+        if len(records) != expected_count:
+            raise MetricsError(
+                f"external measurement count mismatch for {scenario['scenario_id']}"
+            )
+        scenario["measurements"] = records
 
 
 def _number(value: Any, label: str) -> float:
