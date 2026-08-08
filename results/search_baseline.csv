@@ -1,0 +1,10 @@
+query_id,type,result_count,successful_request_count,error_count,error_rate,average_latency_ms,p95_latency_ms,throughput_requests_per_second,measurement_duration_seconds,docker_cpu_average_percent,docker_cpu_maximum_percent,docker_memory_average_percent,docker_memory_maximum_percent,jvm_heap_average_bytes,jvm_heap_maximum_bytes
+fuzzy_databse_optimiztion,fuzzy,828,30,0,0.0,6.587576,7.750458,151.33824,0.198231,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+aggregation_query_optimization,aggregation,7321,30,0,0.0,2.831118,4.034166,350.498511,0.085592,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+keyword_distributed_database,keyword,5139,30,0,0.0,2.699283,3.438167,366.956206,0.081754,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+keyword_query_optimization,keyword,7321,30,0,0.0,2.932551,3.743334,337.442791,0.088904,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+contain_processing_phrases_any,contain,992,30,0,0.0,3.033282,4.430291,326.90006,0.091771,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+contain_database_systems_phrase,contain,554,30,0,0.0,2.530479,3.802375,390.689647,0.076787,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+contain_indexing_not_blockchain,contain,2830,30,0,0.0,2.721399,3.648916,364.520416,0.0823,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+keyword_learned_indexes_cs_db,keyword,371,30,0,0.0,2.46806,3.524625,403.010266,0.07444,172.64,172.64,74.75,74.75,584571904.0,584571904.0
+fuzzy_transacton_procesing,fuzzy,479,30,0,0.0,6.2776,8.071958,158.463119,0.189318,172.64,172.64,74.75,74.75,584571904.0,584571904.0

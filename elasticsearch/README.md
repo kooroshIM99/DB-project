@@ -105,6 +105,52 @@ curl -fsS 'http://127.0.0.1:9200/arxiv_papers_baseline/_count?pretty'
 curl -fsS 'http://127.0.0.1:9200/arxiv_papers_baseline/_stats/store,docs?pretty'
 ```
 
+## Stage 5 Search Baseline
+
+The logical intent and baseline Elasticsearch DSL for all nine required searches
+are fixed in `queries/search_queries.json`. Every comparable search sets
+`track_total_hits: true`; category constraints use filter context, and contain
+search means term/phrase/positive-negative matching rather than arbitrary
+substring matching.
+
+Run one query interactively:
+
+```bash
+python scripts/search_queries.py --query-id keyword_query_optimization
+```
+
+Run all nine searches once and save the compact results:
+
+```bash
+python scripts/search_queries.py --output results/search_once.json
+```
+
+Produce the reproducible single-client performance baseline:
+
+```bash
+python -m pip install -r requirements.txt
+python scripts/benchmark.py
+```
+
+The baseline command performs five excluded warm-up requests and 30 measured
+requests per query. It records every end-to-end client latency, exact result
+count, average/P95 latency, throughput, errors, Elasticsearch node metrics,
+Docker CPU/memory samples, index metadata, environment versions, resource
+limits, and hashes for the dataset, mapping, logical query contract, and
+execution contract. Query scenarios are shuffled with the fixed seed
+`20250808`; caches are not deliberately cleared.
+
+Generated artifacts:
+
+- `results/search_baseline.json`: full machine-readable protocol, measurements,
+  resource samples, aggregation result, and environment metadata
+- `results/search_baseline.csv`: baseline performance table
+- `results/search_baseline_latency.png`: matplotlib average/P95 latency chart
+
+Changing the index, execution variant, warm-ups below five, or iterations below
+30 is rejected by default. `--allow-nonstandard` permits quick diagnostic runs,
+but marks their output as non-baseline and non-compliant.
+
 ### Verified Stage 4 Result
 
 - Status: passed
