@@ -76,6 +76,49 @@ Inspect the baseline mapping in Elasticsearch:
 curl -fsS 'http://127.0.0.1:9200/arxiv_papers_baseline/_mapping?pretty'
 ```
 
+## Stage 4 Baseline Ingestion
+
+Run the reproducible baseline ingestion from the repository root:
+
+```bash
+python scripts/index_dataset.py \
+  --dataset dataset/arxiv_project_sample_50k_cleaned.jsonl \
+  --batch-size 500 \
+  --report results/ingestion_baseline.json
+```
+
+The script reads JSONL records as a stream, sends batches through the Bulk API,
+and always uses `paper_id` as Elasticsearch `_id`. Re-running it is idempotent:
+existing IDs are updated instead of duplicated. It is deliberately fixed to
+`arxiv_papers_baseline`; the optimized index is not populated before stage 9.
+
+After the final refresh, the command verifies that the index contains exactly
+50,000 documents and that every bulk action succeeded. The JSON report records
+UTC start/end times, elapsed time, throughput, created/updated action counts,
+bulk errors, dataset SHA-256, and total/primary index sizes. It is explicitly an
+ingestion benchmark report, not a search benchmark.
+
+Independent checks:
+
+```bash
+curl -fsS 'http://127.0.0.1:9200/arxiv_papers_baseline/_count?pretty'
+curl -fsS 'http://127.0.0.1:9200/arxiv_papers_baseline/_stats/store,docs?pretty'
+```
+
+### Verified Stage 4 Result
+
+- Status: passed
+- Dataset records / final index documents: `50,000` / `50,000`
+- Batch size / bulk requests: `500` / `100`
+- Successful / failed bulk actions: `50,000` / `0`
+- Created / updated actions: `50,000` / `0`
+- Duration: `7.720882s`
+- Ingestion throughput: `6,475.944 documents/s`
+- Primary and total store size: `103,115,180 bytes`
+- Dataset SHA-256: `86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6`
+- Machine-readable report: `results/ingestion_baseline.json`
+- Optimized index: not created or populated in stage 4
+
 ## Stage 3 Baseline Index Result
 
 - Index name: `arxiv_papers_baseline`
