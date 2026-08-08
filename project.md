@@ -21,6 +21,12 @@
 
 ⁧پروژه را باید به ⁦10⁩ مرحله اصلی تقسیم کرد. ترتیب زیر منطقی است، چون هر مرحله خروجی مرحله قبل را مصرف می‌کند.⁩
 
+⁧آخرین بازبینی وضعیت: ⁦2026-08-08⁩. تست‌ها با دستور ⁦`conda run --no-capture-output -n ai_agent python -m pytest -q`⁩ اجرا شدند: ⁦71 passed⁩ و ⁦2 subtests passed⁩. اعتبارسنجی دیتاست پاک‌شده هم ⁦passed⁩ است. ⁦Docker/Elasticsearch⁩ سالم و ⁦cluster health⁩ برابر ⁦green⁩ است. هر دو ⁦index⁩ زندهٔ ⁦`arxiv_papers_baseline`⁩ و ⁦`arxiv_papers_optimized`⁩ ساخته و با ⁦50,000⁩ سند بارگذاری شده‌اند. ⁦`scripts/smoke_test.py`⁩ زنده پاس شده، جست‌وجوی نمونه روی هر دو ⁦index⁩ پاس شده و ⁦`results/reproducibility_manifest.json`⁩ با وضعیت ⁦`passed`⁩ دوباره ساخته شده است. بنابراین کدها، گزارش‌ها، artifactهای ذخیره‌شده و محیط زندهٔ ⁦Elasticsearch⁩ برای ادامه یا تحویل آماده‌اند.⁩
+
+⁧یادداشت ممیزی تحویل: گزارش‌های benchmark قدیمی نشان می‌دهند اجراهای ⁦baseline⁩ با ⁦Python 3.13.3⁩ و اجراهای ⁦optimized⁩ با ⁦Python 3.11.8⁩ ثبت شده‌اند. سایر مؤلفه‌های اصلی مقایسه، شامل ⁦Docker/Elasticsearch⁩، دیتاست، ⁦mapping⁩، ⁦seed⁩ و محدودیت منابع، در artifactها ثبت و قابل ردیابی‌اند. این موضوع در گزارش نهایی به‌عنوان محدودیت شفاف شده است؛ اگر مقایسهٔ زمانی کاملاً سخت‌گیرانه لازم باشد، باید همهٔ benchmarkهای دو نسخه با یک ⁦Python⁩ واحد دوباره اجرا شوند.⁩
+
+⁧یادداشت ابزار اختیاری: یک رابط گرافیکی محلی برای دمو و جست‌وجوی دستی اضافه شده است: ⁦`scripts/search_ui.py`⁩. این UI الزام صورت پروژه نیست و در مقایسه‌ها یا متریک‌های رسمی استفاده نمی‌شود؛ فقط یک ابزار کمکی بدون وابستگی اضافه برای جست‌وجو روی ⁦`arxiv_papers_baseline`⁩ و ⁦`arxiv_papers_optimized`⁩ است.⁩
+
 ## ⁧مرحله ⁦1:⁩ پاک‌سازی و آماده‌سازی داده⁩
 
 ⁧وضعیت: انجام شده.⁩
@@ -172,11 +178,11 @@
 - ⁧تنظیمات واقعی ⁦index⁩ تأیید شد: ⁦`number_of_shards: 1`⁩، ⁦`number_of_replicas: 0`⁩ و ⁦`dynamic: strict`⁩.⁩
 - ⁧تعداد سندهای ⁦`arxiv_papers_baseline`⁩ پس از مرحله ⁦3⁩ برابر ⁦0⁩ است؛ داده هنوز وارد نشده و ورود داده متعلق به مرحله ⁦4⁩ است.⁩
 - ⁧⁦`arxiv_papers_optimized`⁩ ساخته نشده و هیچ ⁦benchmark⁩ اجرا نشده است.⁩
-- ⁧همهٔ تست‌های فعلی پروژه با ⁦`conda run --no-capture-output -n ai_agent python -m pytest`⁩ پاس شدند: ⁦25 passed⁩.⁩
+- ⁧همهٔ تست‌های فعلی پروژه با ⁦`conda run --no-capture-output -n ai_agent python -m pytest -q`⁩ پاس شدند: ⁦71 passed⁩ و ⁦2 subtests passed⁩.⁩
 
 ## ⁧مرحله ⁦4:⁩ ورود دسته‌ای داده به پایگاه داده⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده و در محیط زندهٔ فعلی هم بارگذاری شده است.⁩
 
 ⁧در این مرحله دیتاست پاک‌شده باید با ⁦bulk insert⁩ فقط وارد ⁦`arxiv_papers_baseline`⁩ شود. ورود تک‌به‌تک رکوردها قابل قبول نیست. ورود داده به ⁦`arxiv_papers_optimized`⁩ متعلق به مرحله ⁦9⁩ است.⁩
 
@@ -205,9 +211,18 @@
 - ⁧خطای ⁦bulk⁩ صفر یا کاملاً توضیح داده‌شده باشد.⁩
 - ⁧زمان ورود و اندازه ⁦index⁩ ثبت شود.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦4:⁩⁩
+
+- ⁧اسکریپت ⁦`scripts/index_dataset.py`⁩ اضافه شده است.⁩
+- ⁧گزارش ⁦`results/ingestion_baseline.json`⁩ با وضعیت ⁦`passed`⁩ موجود است.⁩
+- ⁧ورودی گزارش ⁦`dataset/arxiv_project_sample_50k_cleaned.jsonl`⁩ با هش ⁦`86b9febd7fc85d1b9c97377b36db525391854c134430b85e30c87a1dc18f2ad6`⁩ است.⁩
+- ⁧طبق گزارش، ⁦50,000⁩ سند در ⁦100⁩ دستهٔ ⁦500⁩تایی وارد شده‌اند، خطای ⁦bulk⁩ برابر ⁦0⁩ بوده، مدت ورود ⁦7.720882s⁩ و ⁦throughput⁩ حدود ⁦6475.944 docs/s⁩ ثبت شده است.⁩
+- ⁧اندازهٔ ⁦index⁩ پس از اجرای ثبت‌شده ⁦103,115,180 bytes⁩ بوده است.⁩
+- ⁧نکتهٔ عملی: در بازبینی نهایی ⁦2026-08-08⁩، ⁦index⁩ زندهٔ ⁦`arxiv_papers_baseline`⁩ دوباره ساخته و با ⁦50,000⁩ سند بارگذاری شد. ⁦count⁩ مستقیم ⁦Elasticsearch⁩ و ⁦smoke test⁩ این وضعیت را تأیید کردند.⁩
+
 ## ⁧مرحله ⁦5:⁩ پیاده‌سازی ⁦query⁩های پایه، ابزار اندازه‌گیری و خط مبنای کارایی⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده برای خط مبنای تک‌کلاینت.⁩
 
 ⁧در این مرحله سه روش اصلی جست‌وجو باید جداگانه پیاده‌سازی شوند:⁩
 
@@ -259,6 +274,7 @@
 ⁧خروجی مورد انتظار:⁩
 
 - ⁧کد اجرای ⁦query⁩ها، مثلاً ⁦`scripts/search_queries.py`⁩⁩
+- ⁧رابط گرافیکی اختیاری دمو، ⁦`scripts/search_ui.py`⁩، برای جست‌وجوی دستی روی ⁦baseline/optimized⁩. این ابزار جزو معیار رسمی پروژه نیست.⁩
 - ⁧کد مشترک اندازه‌گیری و ذخیره متریک‌ها، مثلاً ⁦`scripts/benchmark.py`⁩⁩
 - ⁧خروجی ⁦JSON⁩ یا ⁦CSV⁩ از نتایج ⁦query⁩ها⁩
 - ⁧جدول ⁦baseline performance⁩⁩
@@ -270,9 +286,17 @@
 - ⁧نتایج و متریک‌ها ذخیره شوند.⁩
 - ⁧خط مبنای ⁦performance⁩ قبل از بهینه‌سازی مشخص باشد.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦5:⁩⁩
+
+- ⁧فایل قرارداد ⁦query⁩ها در ⁦`queries/search_queries.json`⁩ موجود است.⁩
+- ⁧اسکریپت‌های ⁦`scripts/search_queries.py`⁩ و ⁦`scripts/benchmark.py`⁩ اضافه شده‌اند.⁩
+- ⁧گزارش ⁦`results/search_baseline.json`⁩ با وضعیت ⁦`passed`⁩، ⁦`protocol_compliant: true`⁩ و ⁦`resource_metrics_complete: true`⁩ موجود است.⁩
+- ⁧خروجی‌های ⁦`results/search_baseline.csv`⁩ و ⁦`results/search_baseline_latency.png`⁩ ساخته شده‌اند.⁩
+- ⁧گزارش شامل ⁦9⁩ سناریوی ⁦keyword/contain/fuzzy/aggregation⁩، ⁦5⁩ اجرای ⁦warm-up⁩، ⁦30⁩ اجرای اندازه‌گیری‌شده برای هر ⁦query⁩، ⁦track_total_hits: true⁩، متریک‌های ⁦latency/P95/throughput/error/resource⁩ و هش‌های ⁦dataset/mapping/query contract⁩ است.⁩
+
 ## ⁧مرحله ⁦6:⁩ معماری ترکیبی جست‌وجو⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده برای معماری ترکیبی خط مبنا.⁩
 
 ⁧در این مرحله باید معماری‌ای ساخته شود که ⁦keyword⁩، ⁦contain⁩ و ⁦fuzzy⁩ را ترکیب کند. هدف این است که کیفیت نتایج خوب باشد، اما ⁦fuzzy⁩ فقط وقتی اجرا شود که لازم است، چون از نظر ⁦performance⁩ سنگین‌تر است.⁩
 
@@ -361,9 +385,18 @@ RRF(rank) = 1 / (60 + rank)
 - ⁧خروجی آن با سه روش پایه مقایسه شود.⁩
 - ⁧تحلیل کیفیت و کارایی قابل دفاع باشد.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦6:⁩⁩
+
+- ⁧فایل قرارداد ⁦`queries/hybrid_comparison_queries.json`⁩ موجود است.⁩
+- ⁧اسکریپت‌های ⁦`scripts/hybrid_search.py`⁩ و ⁦`scripts/evaluate_relevance.py`⁩ اضافه شده‌اند.⁩
+- ⁧گزارش ⁦`results/hybrid_comparison.json`⁩ با وضعیت ⁦`passed`⁩، ⁦`protocol_compliant: true`⁩ و ⁦`resource_metrics_complete: true`⁩ موجود است.⁩
+- ⁧خروجی‌های ⁦`results/hybrid_performance.csv`⁩، ⁦`results/relevance_judgments.csv`⁩، ⁦`results/hybrid_quality.csv`⁩، ⁦`results/hybrid_quality.json`⁩ و ⁦`results/stage6_analysis.md`⁩ ساخته شده‌اند.⁩
+- ⁧معماری ثبت‌شده از ⁦weighted RRF⁩ با ⁦`k=60`⁩ و وزن‌های ⁦keyword=1.00⁩، ⁦contain=0.90⁩ و ⁦fuzzy=0.65⁩ استفاده می‌کند. در حالت ⁦hybrid⁩، ⁦keyword⁩ و ⁦contain⁩ ابتدا موازی اجرا می‌شوند و ⁦fuzzy⁩ فقط طبق آستانهٔ ثبت‌شده اجرا می‌شود.⁩
+- ⁧ارزیابی دستی کیفیت ⁦101⁩ قضاوت دارد؛ کمتر از ⁦120⁩ چون بعضی حالت‌ها کمتر از ⁦10⁩ نتیجه برگردانده‌اند. محاسبهٔ ⁦Precision@10⁩ با جریمهٔ رتبه‌های خالی ثبت شده است.⁩
+
 ## ⁧مرحله ⁦7:⁩ تولید جدول و نمودار متریک‌ها⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده برای تجمیع متریک‌های موجود؛ گزارش نهایی بعد از مرحله ⁦9⁩ باید دوباره تولید شود.⁩
 
 ⁧صورت پروژه می‌خواهد حداقل ⁦5⁩ متریک کاربردی با کد جمع‌آوری شود. استفاده از ⁦Kibana⁩ یا ⁦OpenSearch Dashboards⁩ به‌تنهایی کافی نیست. ابزار کامل جمع‌آوری متریک‌ها، شامل ⁦latency⁩، ⁦throughput⁩، ⁦P95⁩، ⁦error rate⁩، اندازه ⁦index⁩، تعداد سند و مصرف ⁦CPU/memory⁩، باید قبل از اولین ⁦baseline⁩ در مرحله ⁦5⁩ آماده و استفاده شده باشد. این مرحله نقش آماده‌سازی و اعتبارسنجی قالب گزارش متریک‌ها را دارد: خروجی‌های اولیهٔ ⁦baseline⁩ را می‌خواند، ساختار ⁦JSON/CSV⁩ را کنترل می‌کند و اسکریپت تولید جدول و نمودار را آماده می‌کند. تولید نهایی جدول‌ها و نمودارهای کامل، چون به خروجی مرحله‌های ⁦8⁩ و ⁦9⁩ هم نیاز دارد، در بخش گزارش نهایی بعد از مرحله ⁦9⁩ انجام می‌شود.⁩
 
@@ -391,9 +424,16 @@ RRF(rank) = 1 / (60 + rank)
 - ⁧اسکریپت تولید جدول و نمودار طوری نوشته شود که بعد از مرحله‌های ⁦8⁩ و ⁦9⁩ بتواند خروجی کامل ⁦baseline/load-test/optimized⁩ را دوباره بخواند و گزارش نهایی بسازد.⁩
 - ⁧تعریف محاسبه ⁦latency⁩، ⁦P95⁩، ⁦throughput⁩ و ⁦error rate⁩ در همه سناریوها یکسان باشد.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦7:⁩⁩
+
+- ⁧اسکریپت ⁦`scripts/plot_metrics.py`⁩ اضافه شده است.⁩
+- ⁧گزارش ⁦`results/metrics_summary.json`⁩ با وضعیت ⁦`passed`⁩ موجود است و ⁦3⁩ ورودی را تجمیع کرده: ⁦`search_baseline.json`⁩، ⁦`hybrid_comparison.json`⁩ و ⁦`load_test_baseline.json`⁩.⁩
+- ⁧خروجی‌های ⁦`results/metrics_summary.csv`⁩، ⁦`results/metrics_summary.md`⁩، ⁦`results/metrics_baseline_latency.png`⁩ و ⁦`results/metrics_dashboard.png`⁩ ساخته شده‌اند.⁩
+- ⁧این مرحله برای داده‌های موجود کامل است، اما بعد از مرحله ⁦9⁩ باید روی خروجی‌های ⁦optimized⁩ هم دوباره اجرا شود تا جدول‌ها و نمودارهای نهایی تحویل ساخته شوند.⁩
+
 ## ⁧مرحله ⁦8:⁩ تست چندکلاینتی و فشار⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده برای ⁦baseline⁩.⁩
 
 ⁧در این مرحله باید چند کاربر یا ⁦client⁩ همزمان شبیه‌سازی شوند. منظور از ⁦client⁩ می‌تواند ⁦thread⁩، ⁦process⁩، برنامه مستقل یا ابزار ⁦load testing⁩ باشد.⁩
 
@@ -451,9 +491,17 @@ RRF(rank) = 1 / (60 + rank)
 - ⁧اگر افت واضح مشاهده نشد، نتایج سناریوهای افزایشی ⁦20/50/100⁩ کلاینت یا دلیل اجرا نکردن آن‌ها ثبت شود.⁩
 - ⁧خطاها و مصرف منابع ثبت شده باشند.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦8:⁩⁩
+
+- ⁧فایل قرارداد ⁦`queries/load_test_scenarios.json`⁩ موجود است.⁩
+- ⁧اسکریپت ⁦`scripts/run_load_tests.py`⁩ اضافه شده است.⁩
+- ⁧گزارش ⁦`results/load_test_baseline.json`⁩ با وضعیت ⁦`passed`⁩، ⁦`protocol_compliant: true`⁩ و ⁦`mandatory_scenarios_complete: true`⁩ موجود است.⁩
+- ⁧خروجی‌های ⁦`results/load_test_baseline.csv`⁩، ⁦`results/load_test_measurements.jsonl.gz`⁩، ⁦`results/load_test_latency.png`⁩، ⁦`results/load_test_throughput.png`⁩ و ⁦`results/stage8_analysis.md`⁩ ساخته شده‌اند.⁩
+- ⁧هر ⁦10⁩ سناریوی اجباری ⁦baseline⁩ اجرا شده‌اند و افت فشار قابل مشاهده ثبت شده است؛ بنابراین سناریوهای افزایشی ⁦20/50/100⁩ طبق گزارش لازم نشده‌اند.⁩
+
 ## ⁧مرحله ⁦9:⁩ بهینه‌سازی و مقایسه قبل/بعد⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده و ⁦optimized index⁩ در محیط زندهٔ فعلی هم ساخته و بارگذاری شده است.⁩
 
 ⁧این مرحله باید بعد از اجرای ⁦baseline⁩ انجام شود. هدف این نیست که فقط تنظیمات را بهتر کنیم، بلکه باید نشان دهیم هر تغییر چه اثر مثبت و منفی داشته است. برای اینکه مقایسه آلوده نشود، ⁦baseline⁩ و ⁦optimized⁩ باید دو ⁦index⁩ جدا با ⁦mapping⁩ ثابت داشته باشند. ساخت و ورود داده به ⁦`arxiv_papers_optimized`⁩ در همین مرحله انجام می‌شود، نه در مرحله‌های ⁦3⁩ و ⁦4⁩.⁩
 
@@ -520,9 +568,21 @@ RRF(rank) = 1 / (60 + rank)
 - ⁧اگر سناریوهای افزایشی ⁦20/50/100⁩ در ⁦baseline⁩ اجرا شده‌اند، در ⁦optimized⁩ هم تکرار شوند یا دلیل عدم تکرار ثبت شود.⁩
 - ⁧اثر هر تغییر اصلی با عدد و حداقل یک آزمایش تک‌متغیره پشتیبانی شود.⁩
 
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦9:⁩⁩
+
+- ⁧فایل ⁦`elasticsearch/mappings/arxiv_papers_optimized.json`⁩ و اسکریپت ⁦`scripts/index_optimized.py`⁩ موجود هستند.⁩
+- ⁧گزارش ⁦`results/ingestion_optimized.json`⁩ با وضعیت ⁦`passed`⁩ موجود است و طبق آن ⁦50,000⁩ سند وارد ⁦`arxiv_papers_optimized`⁩ شده‌اند.⁩
+- ⁧گزارش ⁦`results/search_optimized.json`⁩ با وضعیت ⁦`passed`⁩ و ⁦`protocol_compliant: true`⁩ موجود است؛ همهٔ ⁦9⁩ جست‌وجوی مرحله ⁦5⁩ با پروتکل ثابت دوباره اجرا شده‌اند.⁩
+- ⁧گزارش ⁦`results/hybrid_comparison_optimized.json`⁩ و فایل‌های کیفیت ⁦`results/hybrid_quality_optimized.*`⁩ موجود هستند؛ طبق گزارش نهایی، ⁦Precision@10⁩ در همهٔ حالت‌ها نسبت به ⁦baseline⁩ ثابت مانده است.⁩
+- ⁧گزارش ⁦`results/load_test_optimized.json`⁩ با وضعیت ⁦`passed`⁩، ⁦`protocol_compliant: true`⁩ و ⁦`mandatory_scenarios_complete: true`⁩ موجود است؛ هر ⁦10⁩ سناریوی چندکلاینتی اجباری روی ⁦optimized⁩ هم اجرا شده‌اند.⁩
+- ⁧آزمایش‌های تک‌متغیره در ⁦`results/stage9_ablations.json`⁩ و مقایسهٔ قبل/بعد در ⁦`results/stage9_comparison.json`⁩ و ⁦`results/stage9_comparison.csv`⁩ ثبت شده‌اند.⁩
+- ⁧نمودارهای ⁦matplotlib⁩ مقایسه‌ای ⁦`results/stage9_search_before_after.png`⁩ و ⁦`results/stage9_load_before_after.png`⁩ ساخته شده‌اند.⁩
+- ⁧تحلیل مرحله در ⁦`results/stage9_analysis.md`⁩ ثبت شده است: ⁦ngram⁩ برای زیررشته سریع‌تر ولی پرهزینه‌تر از نظر حجم و زمان ⁦ingestion⁩ است؛ ⁦English analyzer⁩ به دلیل کندترشدن و تغییر ⁦recall⁩ رد شده؛ ⁦replica⁩ در محیط تک‌نودی آزمایش معتبر محسوب نشده و ⁦1 shard / 0 replica⁩ حفظ شده است.⁩
+- ⁧نکتهٔ عملی: در بازبینی نهایی ⁦2026-08-08⁩، ⁦index⁩ زندهٔ ⁦`arxiv_papers_optimized`⁩ دوباره ساخته و با ⁦50,000⁩ سند بارگذاری شد. ⁦count⁩ مستقیم ⁦Elasticsearch⁩، جست‌وجوی نمونه و ⁦smoke test⁩ این وضعیت را تأیید کردند.⁩
+
 ## ⁧مرحله ⁦10:⁩ گزارش نهایی و تحویل⁩
 
-⁧وضعیت: انجام نشده.⁩
+⁧وضعیت: انجام شده؛ ⁦smoke test⁩ زنده بعد از بازسازی هر دو ⁦index⁩ پاس شده است.⁩
 
 ⁧این مرحله بعد از کامل‌شدن مرحله ⁦9⁩ انجام می‌شود و هدفش تبدیل همهٔ کدها، تنظیمات، خروجی آزمایش‌ها، نمودارها و تحلیل‌ها به یک تحویل قابل بازتولید و قابل دفاع است. بدون این مرحله، پروژه از نظر فنی اجرا شده ولی از نظر تحویل و گزارش کامل نیست.⁩
 
@@ -570,6 +630,15 @@ RRF(rank) = 1 / (60 + rank)
 
 - ⁧یک نفر دیگر بتواند فقط با ⁦README.md⁩ و فایل‌های مخزن، محیط را بالا بیاورد و نتایج اصلی را بازتولید کند.⁩
 - ⁧همهٔ فایل‌های نتیجه و گزارش مشخص کنند با کدام ⁦index⁩، ⁦mapping⁩، تعریف منطقی ⁦query⁩، تعریف اجرایی ⁦query⁩، ⁦seed⁩، نسخه و تنظیمات منابع تولید شده‌اند.⁩
+
+⁧نتیجهٔ ثبت‌شدهٔ مرحله ⁦10:⁩⁩
+
+- ⁧⁦`README.md`⁩ مسیر اجرای پروژه از نصب تا ⁦Elasticsearch⁩، ساخت ⁦index⁩ها، ورود داده، جست‌وجو، ⁦benchmark⁩، ⁦load test⁩، مقایسه و گزارش نهایی را پوشش می‌دهد.⁩
+- ⁧⁦`requirements.txt`⁩ موجود و وابستگی‌ها ⁦pin⁩ شده‌اند.⁩
+- ⁧گزارش نهایی در ⁦`reports/final-report.md`⁩ موجود است و خلاصهٔ داده، محیط، جست‌وجو، کیفیت، تست چندکاربره، بهینه‌سازی‌ها، محدودیت‌ها و دستورهای بازتولید را ثبت می‌کند.⁩
+- ⁧اسکریپت‌های ⁦`scripts/generate_final_report.py`⁩، ⁦`scripts/build_reproducibility_manifest.py`⁩ و ⁦`scripts/smoke_test.py`⁩ موجود هستند.⁩
+- ⁧فایل ⁦`results/reproducibility_manifest.json`⁩ با وضعیت ⁦`passed`⁩ موجود است و هش artifactهای ضروری، دیتاست‌ها، محیط، تنظیمات منابع و traceability شش ⁦benchmark⁩ اصلی را ثبت کرده است.⁩
+- ⁧فایل ⁦`results/smoke_test.json`⁩ با اجرای زندهٔ جدید به‌روزرسانی شد و وضعیت آن ⁦`passed`⁩ است. این اجرا اتصال ⁦Elasticsearch 9.4.4⁩، سلامت ⁦cluster⁩، وجود هر دو ⁦index⁩، تعداد ⁦50,000⁩ سند در هر ⁦index⁩ و اجرای یک ⁦query⁩ واقعی را تأیید می‌کند.⁩
 
 ## ⁧ساختار پیشنهادی ادامه مخزن⁩
 

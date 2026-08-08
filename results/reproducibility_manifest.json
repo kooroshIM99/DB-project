@@ -149,8 +149,8 @@
     "upstream_source": "https://www.kaggle.com/datasets/Cornell-University/arxiv"
   },
   "environment": {
-    "docker": "28.3.2",
-    "docker_compose": "2.38.2-desktop.1",
+    "docker": "27.3.1",
+    "docker_compose": "2.29.7-desktop.1",
     "elasticsearch": "9.4.4",
     "fixed_resources": {
       "container_memory": "2g",
@@ -158,16 +158,16 @@
       "heap": "1g",
       "replicas": 0
     },
-    "matplotlib": "3.10.7",
-    "platform": "macOS-26.5.1-arm64-arm-64bit",
-    "pytest": "9.1.1",
-    "python": "3.11.8"
+    "matplotlib": "3.10.8",
+    "platform": "macOS-13.6-arm64-arm-64bit",
+    "pytest": "9.0.3",
+    "python": "3.11.11"
   },
   "essential_artifacts": [
     {
       "path": "README.md",
-      "sha256": "73953de09f3e883e988a501b27cdc0e0410fdcdf8dda2c6fec41849b7f309445",
-      "size_bytes": 12315
+      "sha256": "25e74fa8b3a8eced8e1e6af42b044565adafbc3930fda405d153bd83410e0b17",
+      "size_bytes": 13084
     },
     {
       "path": "requirements.txt",
@@ -191,8 +191,8 @@
     },
     {
       "path": "reports/final-report.md",
-      "sha256": "acccbe7470edc376b3d5840676a35dcae59571fba683de225e7411d4ced58d8c",
-      "size_bytes": 9331
+      "sha256": "81a3194e9f6f3db833c11dd643e2ef2a0a5ff4b480e6e64c5dd0d196ebee3557",
+      "size_bytes": 9880
     },
     {
       "path": "scripts/smoke_test.py",
@@ -211,7 +211,7 @@
     },
     {
       "path": "results/smoke_test.json",
-      "sha256": "113352ce37cd05f6cba9fe67f1a96a10fb90cd20ea53c4c8adb73a2b6f6509cb",
+      "sha256": "12fd13c85c8cf66a85fe21b20a6e0f65a7fca6d503ab4409b5d2ac4f860f9404",
       "size_bytes": 1014
     },
     {
@@ -335,7 +335,7 @@
       "size_bytes": 77905
     }
   ],
-  "generated_at": "2026-08-08T08:25:31.257Z",
+  "generated_at": "2026-08-08T12:52:56.783Z",
   "status": "passed",
   "validation": {
     "all_benchmarks_traceable": true,
